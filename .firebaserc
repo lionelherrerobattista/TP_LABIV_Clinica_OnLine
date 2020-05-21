@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "tpsaladejuegos-18455": {
+      "hosting": {
+        "tpLabIVClinicaOnline": [
+          "tpsaladejuegos-18455"
+        ]
+      }
+    }
+  }
+}
