@@ -1,3 +1,5 @@
+
+
 export class Paciente {
   id:number;
   nombre:string;
@@ -6,6 +8,7 @@ export class Paciente {
   email:string;
   fotoUno:string;
   fotoDos:string;
+  perfil:string;
 
   constructor(nombre:string, apellido:string, dni:number, email:string, fotoUno:string, fotoDos:string) {
 
@@ -15,6 +18,7 @@ export class Paciente {
     this.email = email;
     this.fotoUno = fotoUno;
     this.fotoDos = fotoDos;
+    this.perfil = 'paciente';
 
   }
 }

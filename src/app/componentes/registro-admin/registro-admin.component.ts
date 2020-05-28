@@ -102,8 +102,11 @@ export class RegistroAdminComponent implements OnInit {
 
     //Subir a la db
     this.adminService.createAdministrador(administrador).then( respuesta => {
-      console.log('Cargado');
-      this.abrirModalResultado();
+
+      this.authService.registrarUsuario(this.email, this.clave).then( respuesta => {
+        this.abrirModalResultado();
+      }, error => console.log('Error: ' + error));
+
     }, error => {
       console.log('Error: ' + error);
     });

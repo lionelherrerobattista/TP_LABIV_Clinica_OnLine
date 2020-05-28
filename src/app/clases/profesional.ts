@@ -7,6 +7,7 @@ export class Profesional {
   foto:string;
   especialidades:string[];
   aprobado:boolean;
+  perfil:string;
 
   constructor(nombre:string, apellido:string, dni:number, email:string, foto:string, especialidades:string[]) {
 
@@ -17,6 +18,7 @@ export class Profesional {
     this.foto = foto;
     this.especialidades = [];
     this.aprobado = false;//debe habilitarlo el administrador
+    this.perfil = 'profesional';
 
     for(let especialidad of especialidades) {
       this.especialidades.push(especialidad);
@@ -24,17 +26,4 @@ export class Profesional {
 
   }
 
-  static validarDni(dni:string):boolean {
-    let esValido = false;
-    let regexStr = '^[0-9]*$';
-
-    let regEx =  new RegExp(regexStr);
-
-    if(regEx.test(dni)){
-      esValido = true;
-    }
-
-    return esValido;
-
-  }
 }

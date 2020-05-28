@@ -5,6 +5,7 @@ export class Administrador {
   dni:number;
   email:string;
   foto:string;
+  perfil:string;
 
   constructor(nombre:string, apellido:string, dni:number, email:string, foto:string) {
 
@@ -13,5 +14,6 @@ export class Administrador {
     this.dni = dni;
     this.email = email;
     this.foto = foto;
+    this.perfil = 'administrador';
   }
 }

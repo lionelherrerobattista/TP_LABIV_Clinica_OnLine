@@ -96,16 +96,18 @@ export class RegistroPacienteComponent implements OnInit {
   guardarPaciente() {
     let paciente:Paciente;
 
-    //Crear profesional
+    //Crear paciente
     paciente = new Paciente(this.nombre, this.apellido,
       this.dni, this.email, this.urlFoto, this.urlFoto);
 
     //Subir a la db
     this.pacienteService.createPaciente(paciente).then( respuesta => {
-      this.abrirModalResultado();
-    }, error => {
-      console.log('Error: ' + error);
-    });
+
+      this.authService.registrarUsuario(this.email, this.clave).then( respuesta => {
+        this.abrirModalResultado();
+      }, error => console.log('Error: ' + error));
+
+    }, error => console.log('Error: ' + error));
 
   }
 

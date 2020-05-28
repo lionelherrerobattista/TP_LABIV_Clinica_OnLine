@@ -2,7 +2,7 @@
 <mat-toolbar color="primary">
   <span>Clínica OnLine</span>
   <button mat-button routerLink="">Home</button>
-  <button mat-button routerLink="/login">Iniciar Sesión</button>
+  <button mat-button *ngIf="usuarioLogeado == null" routerLink="/login">Iniciar Sesión</button>
   <button mat-button [matMenuTriggerFor]="registro">Registro</button>
   <mat-menu #registro="matMenu">
     <button mat-menu-item [routerLink]="['/registro/administrador']">Administrador</button>
@@ -15,4 +15,5 @@
     <button mat-menu-item [routerLink]="['/lista/profesional']">Profesionales</button>
     <button mat-menu-item [routerLink]="['/lista/paciente']">Pacientes</button>
   </mat-menu>
+  <button mat-button *ngIf="usuarioLogeado != null" (click)="cerrarSesion()">Cerrar Sesión</button>
 </mat-toolbar>
