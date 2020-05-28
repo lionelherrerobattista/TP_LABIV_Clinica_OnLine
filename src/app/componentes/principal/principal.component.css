@@ -1,0 +1,18 @@
+#div-contenedor{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-image: url('/assets/img/background_login.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+
+#div-contenedor h1 {
+  color: azure;
+  text-shadow: 1px 1px 2px black;
+
+}

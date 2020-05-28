@@ -1,9 +1,18 @@
 
 <mat-toolbar color="primary">
-  <span>Peliculas App</span>
+  <span>Clínica OnLine</span>
   <button mat-button routerLink="">Home</button>
   <button mat-button routerLink="/login">Iniciar Sesión</button>
-  <button mat-button routerLink="/registro">Registro</button>
-
-
+  <button mat-button [matMenuTriggerFor]="registro">Registro</button>
+  <mat-menu #registro="matMenu">
+    <button mat-menu-item [routerLink]="['/registro/administrador']">Administrador</button>
+    <button mat-menu-item [routerLink]="['/registro/profesional']">Profesional</button>
+    <button mat-menu-item [routerLink]="['/registro/paciente']">Paciente</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="listas">Listas</button>
+  <mat-menu #listas="matMenu">
+    <button mat-menu-item [routerLink]="['/lista/administrador']">Administradores</button>
+    <button mat-menu-item [routerLink]="['/lista/profesional']">Profesionales</button>
+    <button mat-menu-item [routerLink]="['/lista/paciente']">Pacientes</button>
+  </mat-menu>
 </mat-toolbar>

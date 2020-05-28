@@ -1,0 +1,23 @@
+
+<div class='tabla'>
+  <table id='tabla-peliculas'>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>DNI</th>
+        <th>Fotos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let paciente of listadoPacientes">
+        <td>{{paciente.nombre}}</td>
+        <td>{{paciente.apellido}}</td>
+        <td>{{paciente.dni}}</td>
+        <td><img [src]="paciente.fotoUno"><img [src]="paciente.fotoDos"></td>
+
+      </tr>
+
+    </tbody>
+  </table>
+</div>

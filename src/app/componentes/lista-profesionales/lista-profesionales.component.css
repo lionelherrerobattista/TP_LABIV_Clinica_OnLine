@@ -1,0 +1,39 @@
+.tabla {
+
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+}
+
+img {
+  max-width: 100px;
+  max-height: auto;
+}
+
+#tabla-peliculas {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+#tabla-peliculas td, #tabla-peliculas th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#tabla-peliculas tr:nth-child(even){background-color: #f2f2f2;}
+
+#tabla-peliculas tr:hover {background-color: #ddd;}
+
+#tabla-peliculas th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #673ab7;
+  color: white;
+}
+
+
+

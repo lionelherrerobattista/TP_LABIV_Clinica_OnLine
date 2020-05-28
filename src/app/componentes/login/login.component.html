@@ -1,1 +1,27 @@
-<p>login works!</p>
+
+<div id="div-login">
+
+  <form class="example-form">
+
+    <h1>Clinica OnLine</h1>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input matInput [(ngModel)]="email" type="email" name="email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput  [(ngModel)]="clave" type="password" name="clave" required>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="iniciarSesion()">Iniciar Sesión</button>
+
+    <div id="div-autocompletar">
+      <button mat-raised-button color="warn" (click)="completarLogin('admin')">Admin</button>
+    </div>
+  </form>
+
+
+</div>
+

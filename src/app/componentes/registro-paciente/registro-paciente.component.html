@@ -1,0 +1,47 @@
+<div id="div-registro">
+
+  <form class="example-form">
+
+    <h1>Clinica OnLine</h1>
+    <h3>Registro paciente:</h3>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="nombre" type="text" name="nombre" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Apellido</mat-label>
+      <input matInput [(ngModel)]="apellido" type="text" name="apellido" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>DNI</mat-label>
+      <input matInput [(ngModel)]="dni" type="text" [formControl]="dniInput" name="dni" maxlength="8" required>
+      <mat-hint>Ingrese solo números</mat-hint>
+      <mat-error *ngIf="dniInput.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input matInput [(ngModel)]="email" type="email" name="email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput  [(ngModel)]="clave" type="password" name="clave" required>
+    </mat-form-field>
+
+    <div id="div-cargarFoto">
+      <label for="myfile">Cargar foto:</label>
+      <input type="file" id="fotoProfesional" name="fotoProfesional" (change)="cambioArchivo($event)">
+    </div>
+
+    <button mat-raised-button color="primary" (click)="registrarPaciente()">Registrarse</button>
+    <button mat-raised-button color="primary" color="warn" [routerLink]="['/principal']">Cancelar</button>
+
+
+  </form>
+
+
+</div>

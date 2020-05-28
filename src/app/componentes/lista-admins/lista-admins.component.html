@@ -1,0 +1,21 @@
+
+<div class='tabla'>
+  <table id='tabla-peliculas'>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Foto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let admin of listaAdmins">
+        <td>{{admin.nombre}}</td>
+        <td>{{admin.apellido}}</td>
+        <td><img [src]="admin.foto"></td>
+
+      </tr>
+
+    </tbody>
+  </table>
+</div>
