@@ -20,14 +20,14 @@ pacientes con turno para consulta o tratamiento./
 
 Se debe seleccionar del menú según el tipo de usuario que se quiera registrar:
 
-![Alt text](src\assets\img\readme\registro1.png?raw=true "Registro1")
+![Alt text](https://github.com/lionelherrerobattista/TP_LABIV_Clinica_OnLine/blob/con_material/src/assets/img/readme/registro1.png?raw=true)
 
 Luego, se completan los datos del usuario que se registra:
 
-![Alt text](src\assets\img\readme\registro2.png?raw=true "Registro2")
+![Alt text](https://github.com/lionelherrerobattista/TP_LABIV_Clinica_OnLine/blob/con_material/src/assets/img/readme/registro2.png?raw=true)
 
 ## Login
 
 Los usuarios registrados se pueden logear utilizando su correo electrónico y su clave.
 
-![Alt text](src\assets\img\readme\login1.png?raw=true "Registro2")
+![Alt text](https://github.com/lionelherrerobattista/TP_LABIV_Clinica_OnLine/blob/con_material/src/assets/img/readme/login1.png?raw=true)
