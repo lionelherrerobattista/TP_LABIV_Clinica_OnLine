@@ -1,24 +1,15 @@
+import { Usuario } from './usuario';
 
 
-export class Paciente {
-  id:number;
-  nombre:string;
-  apellido:string;
-  dni:number;
-  email:string;
-  fotoUno:string;
+export class Paciente extends Usuario {
+  
   fotoDos:string;
-  perfil:string;
 
-  constructor(nombre:string, apellido:string, dni:number, email:string, fotoUno:string, fotoDos:string) {
+  constructor(uid:string, nombre:string, apellido:string, dni:number, email:string, fotoUno:string, fotoDos:string) {
 
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.dni = dni;
-    this.email = email;
-    this.fotoUno = fotoUno;
+    super(uid, nombre, apellido, dni, email, fotoUno, 'paciente');
+    
     this.fotoDos = fotoDos;
-    this.perfil = 'paciente';
 
   }
 }

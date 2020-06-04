@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfesionalService } from 'src/app/servicios/profesional.service';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
+
 
 @Component({
   selector: 'app-lista-profesionales',
@@ -10,14 +11,14 @@ export class ListaProfesionalesComponent implements OnInit {
 
   listadoProfesionales
 
-  constructor(private profesionalService:ProfesionalService) { }
+  constructor(private usuarioService:UsuarioService) { }
 
   ngOnInit(): void {
-    this.profesionalService.devolverListado().subscribe( listado =>{
-      this.listadoProfesionales = listado;
-    });
+    this.usuarioService.devolverListado().subscribe(lista => {
+      this.listadoProfesionales = lista;
+    })
 
-    this.profesionalService.actualizarListado();
+    this.usuarioService.filtrarListaPorPerfil('profesional');
   }
 
 

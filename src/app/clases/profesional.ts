@@ -1,28 +1,21 @@
-export class Profesional {
-  id:number;
-  nombre:string;
-  apellido:string;
-  dni:number;
-  email:string;
-  foto:string;
+import { Usuario } from './usuario';
+
+export class Profesional extends Usuario {
+  
   especialidades:string[];
   aprobado:boolean;
-  perfil:string;
 
-  constructor(nombre:string, apellido:string, dni:number, email:string, foto:string, especialidades:string[]) {
+  constructor(uid:string, nombre:string, apellido:string, dni:number, email:string, foto:string, especialidades:string[]) {
 
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.dni = dni;
-    this.email = email;
-    this.foto = foto;
+    super(uid, nombre, apellido, dni, email, foto, 'profesional');
+    
     this.especialidades = [];
-    this.aprobado = false;//debe habilitarlo el administrador
-    this.perfil = 'profesional';
-
+    
     for(let especialidad of especialidades) {
       this.especialidades.push(especialidad);
     }
+
+    this.aprobado = false;//debe habilitarlo el administrador
 
   }
 

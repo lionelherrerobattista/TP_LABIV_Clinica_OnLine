@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Profesional } from 'src/app/clases/profesional';
-import { ProfesionalService } from 'src/app/servicios/profesional.service';
 import {FormControl, Validators, Form} from '@angular/forms';
 import { FstorageService } from 'src/app/servicios/fstorage.service';
 import { AngularFireStorageReference } from '@angular/fire/storage/ref';
 import { AngularFireUploadTask } from '@angular/fire/storage/task';
 import { finalize, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/servicios/auth.service';
-import { AdministradorService } from 'src/app/servicios/administrador.service';
 import { Administrador } from 'src/app/clases/administrador';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalRegistroComponent } from '../modal-registro/modal-registro.component';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 @Component({
   selector: 'app-registro-admin',
@@ -28,9 +25,11 @@ export class RegistroAdminComponent implements OnInit {
   clave:string;
   archivoFoto:File;
   urlFoto:string;
+  nuevoAdministrador:Administrador;
+  referenciaStorage;
 
   constructor(
-    private adminService:AdministradorService,
+    private usuarioService:UsuarioService,
     private fstorage:FstorageService,
     private authService: AuthService,
     private matDialog: MatDialog,
@@ -69,48 +68,65 @@ export class RegistroAdminComponent implements OnInit {
     }
   }
 
-  ///Guarda al profesional en la base de datos
-  registrarProfesional() {
+  ///Guarda al usuario en la base de datos
+  registrarUsuario() {
 
     let path;
     let referencia:AngularFireStorageReference;
     let tarea:AngularFireUploadTask;
 
-
+    //Crear nombre del archivo
     path= `administradores/${Date.now()}_${this.archivoFoto.name}`;
 
     referencia = this.fstorage.getReferencia(path);
+    this.referenciaStorage = this.fstorage.getReferencia(path);
 
     tarea = this.fstorage.subirArchivo(path, this.archivoFoto);
 
-    console.log('sube');
-
+    //Guardar foto en firestorage
     tarea.snapshotChanges().pipe(
-      finalize(() => referencia.getDownloadURL().subscribe( url => {
-        this.urlFoto = url;
-        this.guardarAdministrador();
-      }))
+      finalize(() =>{
+
+        referencia.getDownloadURL().subscribe( url => {
+          this.urlFoto = url;
+          this.guardarUsuario();
+          
+        });
+
+        
+
+      } )
     ).subscribe();
   }
 
-  guardarAdministrador() {
-    let administrador:Administrador;
+  guardarUsuario() {
 
-    //Crear administrador
-    administrador = new Administrador(this.nombre, this.apellido,
+    let metadatos;
+    
+    this.authService.registrarUsuario(this.email, this.clave).then( respuesta => {
+      
+      //Crear administrador
+      this.nuevoAdministrador = new Administrador(respuesta.user.uid, this.nombre, this.apellido,
       this.dni, this.email, this.urlFoto);
 
-    //Subir a la db
-    this.adminService.createAdministrador(administrador).then( respuesta => {
+      //Guardar metadatos del usuario en la foto
+      metadatos = {
+        customMetadata : {
+          usuario: JSON.stringify(this.nuevoAdministrador),
+        }
+      }
 
-      this.authService.registrarUsuario(this.email, this.clave).then( respuesta => {
+      this.referenciaStorage.updateMetadata(metadatos);
+
+      //Guardar en la db
+      this.usuarioService.createUsuario(this.nuevoAdministrador).then( respuesta => {
+
         this.abrirModalResultado();
-      }, error => console.log('Error: ' + error));
 
-    }, error => {
-      console.log('Error: ' + error);
-    });
-
+      }, error => console.log('Error:' + error));
+           
+    }, error => console.log('Error: ' + error));
+   
   }
 
   abrirModalResultado() {

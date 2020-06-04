@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AdministradorService } from 'src/app/servicios/administrador.service';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
+
 
 @Component({
   selector: 'app-lista-admins',
@@ -9,14 +10,14 @@ import { AdministradorService } from 'src/app/servicios/administrador.service';
 export class ListaAdminsComponent implements OnInit {
 
   listaAdmins;
-  constructor(private administradoresService:AdministradorService) { }
+  constructor(private usuarioService:UsuarioService) { }
 
   ngOnInit(): void {
-    this.administradoresService.devolverListado().subscribe(listado => {
-      this.listaAdmins = listado;
-    });
+    this.usuarioService.devolverListado().subscribe(lista => {
+      this.listaAdmins = lista;
+    })
 
-    this.administradoresService.actualizarListado();
+    this.usuarioService.filtrarListaPorPerfil('administrador');
   }
 
 }

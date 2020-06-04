@@ -1,19 +1,12 @@
-export class Administrador {
-  id:number;
-  nombre:string;
-  apellido:string;
-  dni:number;
-  email:string;
-  foto:string;
+import { Usuario } from './usuario';
+
+export class Administrador extends Usuario {
+  
   perfil:string;
 
-  constructor(nombre:string, apellido:string, dni:number, email:string, foto:string) {
+  constructor(uid:string, nombre:string, apellido:string, dni:number, email:string, foto:string) {
 
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.dni = dni;
-    this.email = email;
-    this.foto = foto;
-    this.perfil = 'administrador';
+    super(uid, nombre, apellido, dni, email, foto, 'administrador');
+    
   }
 }

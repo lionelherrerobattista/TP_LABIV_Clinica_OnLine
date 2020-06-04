@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PacienteService } from 'src/app/servicios/paciente.service';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 @Component({
   selector: 'app-lista-pacientes',
@@ -10,14 +10,14 @@ export class ListaPacientesComponent implements OnInit {
 
   listadoPacientes;
 
-  constructor(private pacienteService:PacienteService) { }
+  constructor(private usuarioService:UsuarioService) { }
 
   ngOnInit(): void {
-    this.pacienteService.devolverListado().subscribe(listado => {
-      this.listadoPacientes = listado;
-    });
+    this.usuarioService.devolverListado().subscribe(lista => {
+      this.listadoPacientes = lista;
+    })
 
-    this.pacienteService.actualizarListado();
+    this.usuarioService.filtrarListaPorPerfil('paciente');
   }
 
 }

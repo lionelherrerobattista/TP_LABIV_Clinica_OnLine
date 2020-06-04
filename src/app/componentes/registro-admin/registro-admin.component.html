@@ -34,10 +34,10 @@
 
     <div id="div-cargarFoto">
       <label for="myfile">Cargar foto:</label>
-      <input type="file" id="fotoProfesional" name="fotoProfesional" (change)="cambioArchivo($event)">
+      <input type="file" id="fotoUsuario" name="fotoUsuario" (change)="cambioArchivo($event)">
     </div>
 
-    <button mat-raised-button color="primary" (click)="registrarProfesional()">Registrarse</button>
+    <button mat-raised-button color="primary" (click)="registrarUsuario()">Registrarse</button>
     <button mat-raised-button color="primary" color="warn" [routerLink]="['/principal']">Cancelar</button>
 
 

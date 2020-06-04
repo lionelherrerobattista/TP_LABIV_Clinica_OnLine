@@ -1,27 +1,33 @@
-# TP_LABIV_Clinica_OnLine
+# Clinica OnLine :ambulance:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
 
-## Development server
+## Descripción
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+La clínica OnLine, especialista en salud, cuenta
+actualmente con 6 consultorios,
+dos laboratorios y una sala
+de espera general./
 
-## Code scaffolding
+Está abierta al público de lunes
+a viernes en el horario de 8:00 a 19:00 y los
+sábados en el horario de 8:00 a 14:00./
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Trabajan en ella profesionales de diversas
+especialidades, que ocupan los consultorios acorde a su disponibilidad, y reciben en ellos
+pacientes con turno para consulta o tratamiento./
 
-## Build
+## Registro
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Se debe seleccionar del menú según el tipo de usuario que se quiera registrar:
 
-## Running unit tests
+![Alt text](src\assets\img\readme\registro1.png?raw=true "Registro1")
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Luego, se completan los datos del usuario que se registra:
 
-## Running end-to-end tests
+![Alt text](src\assets\img\readme\registro2.png?raw=true "Registro2")
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Login
 
-## Further help
+Los usuarios registrados se pueden logear utilizando su correo electrónico y su clave.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+![Alt text](src\assets\img\readme\login1.png?raw=true "Registro2")

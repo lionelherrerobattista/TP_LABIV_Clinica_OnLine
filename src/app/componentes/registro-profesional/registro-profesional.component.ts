@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Profesional } from 'src/app/clases/profesional';
-import { ProfesionalService } from 'src/app/servicios/profesional.service';
 import {FormControl, Validators, Form} from '@angular/forms';
 import { FstorageService } from 'src/app/servicios/fstorage.service';
 import { AngularFireStorageReference } from '@angular/fire/storage/ref';
 import { AngularFireUploadTask } from '@angular/fire/storage/task';
-import { finalize, tap } from 'rxjs/operators';
+import { finalize} from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalRegistroComponent } from '../modal-registro/modal-registro.component';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 @Component({
   selector: 'app-registro-profesional',
@@ -28,14 +28,14 @@ export class RegistroProfesionalComponent implements OnInit {
   clave:string;
   archivoFoto:File;
   urlFoto:string;
+  nuevoUsuario;
+  referenciaStorage;
 
   constructor(
-    private profesionalService:ProfesionalService,
+    private usuarioService:UsuarioService,
     private fstorage:FstorageService,
     private authService: AuthService,
     private matDialog: MatDialog,
-
-
   ) {
       this.especialidades = [];
       this.dniInput = new FormControl('', [Validators.pattern('^[0-9]*$')]); //controla el patrón del dni
@@ -73,7 +73,7 @@ export class RegistroProfesionalComponent implements OnInit {
   }
 
   ///Guarda al profesional en la base de datos
-  registrarProfesional() {
+  registrarUsuario() {
 
     let profesional;
     let path;
@@ -84,32 +84,44 @@ export class RegistroProfesionalComponent implements OnInit {
     path= `profesionales/${Date.now()}_${this.archivoFoto.name}`;
 
     referencia = this.fstorage.getReferencia(path);
+    this.referenciaStorage = this.fstorage.getReferencia(path);
 
     tarea = this.fstorage.subirArchivo(path, this.archivoFoto);
-
-    console.log('sube');
 
     tarea.snapshotChanges().pipe(
       finalize(() => referencia.getDownloadURL().subscribe( url => {
         this.urlFoto = url;
-        this.guardarProfesional();
+        this.guardarUsuario();
       }))
     ).subscribe();
   }
 
-  guardarProfesional() {
-    let profesional:Profesional;
+  guardarUsuario() {
+    let metadatos;
 
-    //Crear profesional
-    profesional = new Profesional(this.nombre, this.apellido,
+    this.authService.registrarUsuario(this.email, this.clave).then( respuesta => {
+      
+      //Crear paciente
+      this.nuevoUsuario = new Profesional(respuesta.user.uid, this.nombre, this.apellido,
       this.dni, this.email, this.urlFoto, this.especialidades);
 
-    //Subir a la db
-    this.profesionalService.createProfesional(profesional).then( respuesta => {
-      this.abrirModalResultado();
-    }, error => {
-      console.log('Error: ' + error);
-    });
+      //Guardar metadatos del usuario en la foto
+      metadatos = {
+        customMetadata : {
+          usuario: JSON.stringify(this.nuevoUsuario),
+        }
+      }
+
+      this.referenciaStorage.updateMetadata(metadatos);
+
+      //Guardar en la db
+      this.usuarioService.createUsuario(this.nuevoUsuario).then( respuesta => {
+
+        this.abrirModalResultado();
+
+      }, error => console.log('Error:' + error));
+           
+    }, error => console.log('Error: ' + error));
 
   }
 

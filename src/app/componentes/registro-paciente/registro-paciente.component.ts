@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Profesional } from 'src/app/clases/profesional';
-import { ProfesionalService } from 'src/app/servicios/profesional.service';
 import {FormControl, Validators, Form} from '@angular/forms';
 import { FstorageService } from 'src/app/servicios/fstorage.service';
 import { AngularFireStorageReference } from '@angular/fire/storage/ref';
 import { AngularFireUploadTask } from '@angular/fire/storage/task';
 import { finalize, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/servicios/auth.service';
-import { PacienteService } from 'src/app/servicios/paciente.service';
 import { Paciente } from 'src/app/clases/paciente';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalRegistroComponent } from '../modal-registro/modal-registro.component';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 
 @Component({
@@ -29,9 +26,11 @@ export class RegistroPacienteComponent implements OnInit {
   clave:string;
   archivoFoto:File;
   urlFoto:string;
+  nuevoUsuario;
+  referenciaStorage;
 
   constructor(
-    private pacienteService:PacienteService,
+    private usuarioService:UsuarioService,
     private fstorage:FstorageService,
     private authService: AuthService,
     private matDialog: MatDialog,
@@ -55,6 +54,7 @@ export class RegistroPacienteComponent implements OnInit {
     let referencia:AngularFireStorageReference;
 
     referencia = this.fstorage.getReferencia(this.archivoFoto.name);
+    this.referenciaStorage = this.fstorage.getReferencia(this.archivoFoto.name);
 
     this.fstorage.subirArchivo(this.archivoFoto.name, this.archivoFoto);
 
@@ -71,7 +71,7 @@ export class RegistroPacienteComponent implements OnInit {
   }
 
   ///Guarda al profesional en la base de datos
-  registrarPaciente() {
+  registrarUsuario() {
 
     let path;
     let referencia:AngularFireStorageReference;
@@ -88,25 +88,37 @@ export class RegistroPacienteComponent implements OnInit {
     tarea.snapshotChanges().pipe(
       finalize(() => referencia.getDownloadURL().subscribe( url => {
         this.urlFoto = url;
-        this.guardarPaciente();
+        this.guardarUsuario();
       }))
     ).subscribe();
   }
 
-  guardarPaciente() {
-    let paciente:Paciente;
+  guardarUsuario() {
+    
+    let metadatos;
 
-    //Crear paciente
-    paciente = new Paciente(this.nombre, this.apellido,
+    this.authService.registrarUsuario(this.email, this.clave).then( respuesta => {
+      
+      //Crear paciente
+      this.nuevoUsuario = new Paciente(respuesta.user.uid, this.nombre, this.apellido,
       this.dni, this.email, this.urlFoto, this.urlFoto);
 
-    //Subir a la db
-    this.pacienteService.createPaciente(paciente).then( respuesta => {
+      //Guardar metadatos del usuario en la foto
+      metadatos = {
+        customMetadata : {
+          usuario: JSON.stringify(this.nuevoUsuario),
+        }
+      }
 
-      this.authService.registrarUsuario(this.email, this.clave).then( respuesta => {
+      this.referenciaStorage.updateMetadata(metadatos);
+
+      //Guardar en la db
+      this.usuarioService.createUsuario(this.nuevoUsuario).then( respuesta => {
+
         this.abrirModalResultado();
-      }, error => console.log('Error: ' + error));
 
+      }, error => console.log('Error:' + error));
+           
     }, error => console.log('Error: ' + error));
 
   }

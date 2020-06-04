@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Administrador } from '../clases/administrador';
 import { Paciente } from '../clases/paciente';
+import { Usuario } from '../clases/usuario';
 
 
 @Injectable({
@@ -12,13 +13,14 @@ import { Paciente } from '../clases/paciente';
 })
 export class UsuarioService {
 
-  listaOriginal:Observable<any[]>;
-  listaAdministradores:Subject<Administrador[]>;
-  listaProfesionales:Subject<Profesional[]>;
-  listaPacientes:Subject<Paciente[]>;
+  listaOriginal:Observable<Usuario[]>;
+  listaUsuarios:Subject<Usuario[]>;
+
 
   constructor(private db:AngularFirestore) {
-    this.listaAdministradores = new Subject<any[]>();
+    
+    //Inicializar las listas
+    this.listaUsuarios = new Subject<Usuario[]>();
 
       //Guardo el documento de las fotos, el pipe es para tener el id
       this.listaOriginal = this.db.collection('usuarios').snapshotChanges().pipe(
@@ -32,30 +34,45 @@ export class UsuarioService {
       );
   }
 
+  ///Devuelve el listado entero de usuarios
   devolverListado(){
-    return this.listaAdministradores;
+    return this.listaUsuarios;
   }
 
+  filtrarListaPorPerfil(filtroPerfil:string){   
+    let listaFiltrada;
+
+    this.listaOriginal.subscribe(lista => {
+
+      listaFiltrada = lista.filter(usuario => usuario.perfil == filtroPerfil);
+
+      this.listaUsuarios.next(listaFiltrada);
+
+    })
+  }
+
+  ///Actualiza el listado
   actualizarListado() {
-    this.listaOriginal.subscribe( administradores => {
-      this.listaAdministradores.next(administradores);
+    this.listaOriginal.subscribe( usuarios => {
+      this.listaUsuarios.next(usuarios);
     });
   }
 
-  getAdministradores() {
+  getUsuarios() {
     return this.listaOriginal;
+    
   }
 
-  createAdministrador(administrador:Administrador): Promise<DocumentReference> {
-    return this.db.collection('administradores').add({...administrador});//Si se crea como clase usar ...
+  createUsuario(usuario:Usuario): Promise<DocumentReference> {
+    return this.db.collection('usuarios').add({...usuario});//Si se crea como clase usar ...
   }
 
-  updateAdministrador(administrador:Administrador) {
-    delete administrador.id;
-    this.db.doc('administradores/' + administrador.id).update(administrador);
+  updateUsuario(usuario:Usuario) {
+    delete usuario.id;
+    this.db.doc('usuarios/' + usuario.id).update(usuario);
   }
 
-  deleteAdministrador(administrador:Administrador) {
-    this.db.doc('administradores/' + administrador.id).delete();
+  deleteUsuario(usuario:Usuario) {
+    this.db.doc('usuarios/' + usuario.id).delete();
   }
 }
