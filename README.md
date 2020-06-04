@@ -6,15 +6,15 @@
 La clínica OnLine, especialista en salud, cuenta
 actualmente con 6 consultorios,
 dos laboratorios y una sala
-de espera general.\
+de espera general.
 
 Está abierta al público de lunes
 a viernes en el horario de 8:00 a 19:00 y los
-sábados en el horario de 8:00 a 14:00.\
+sábados en el horario de 8:00 a 14:00.
 
 Trabajan en ella profesionales de diversas
 especialidades, que ocupan los consultorios acorde a su disponibilidad, y reciben en ellos
-pacientes con turno para consulta o tratamiento.\
+pacientes con turno para consulta o tratamiento.
 
 ## Registro
 
