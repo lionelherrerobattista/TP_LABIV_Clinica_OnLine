@@ -34,7 +34,11 @@
 
     <div id="div-cargarFoto">
       <label for="myfile">Cargar foto:</label>
-      <input type="file" id="fotoProfesional" name="fotoProfesional" (change)="cambioArchivo($event)">
+      <input type="file" id="fotoUsuario" name="fotoUsuario" (change)="cambioArchivo($event)">
+      <div id="div-vista-previa">
+        <img *ngFor="let imagen of vistaPreviaImagenes" [src]="imagen">
+      </div>
+      
     </div>
 
     <div id="div-especialidades" *ngIf="especialidades.length >= 1">

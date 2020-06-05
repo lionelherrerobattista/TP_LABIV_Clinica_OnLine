@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalRegistroComponent } from '../modal-registro/modal-registro.component';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 
+
+
 @Component({
   selector: 'app-registro-admin',
   templateUrl: './registro-admin.component.html',
@@ -27,6 +29,7 @@ export class RegistroAdminComponent implements OnInit {
   urlFoto:string;
   nuevoAdministrador:Administrador;
   referenciaStorage;
+  vistaPreviaImagenes;
 
   constructor(
     private usuarioService:UsuarioService,
@@ -35,16 +38,40 @@ export class RegistroAdminComponent implements OnInit {
     private matDialog: MatDialog,
   ) {
     this.dniInput = new FormControl('', [Validators.pattern('^[0-9]*$')]); //controla el patrón del dni
+    
   }
 
   ngOnInit(): void {
   }
 
   cambioArchivo(event) {
-    if (event.target.files.length > 0) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        this.archivoFoto = event.target.files[i];
+
+    let archivos = event.target.files;
+    this.vistaPreviaImagenes = [];
+    console.log("hola");
+
+    if (archivos) {
+      
+      
+      for (let archivo of archivos) {
+        this.archivoFoto = archivo;
+
+        console.log(archivo)
+        
+        //Mostrar vista previa de la imagen
+        let reader = new FileReader();
+        
+        reader.onload = (e) => { 
+          this.vistaPreviaImagenes.push(e.target.result);
+        }
+
+        reader.readAsDataURL(archivo); 
+        
+        
       }
+
+      console.log(this.vistaPreviaImagenes)
+
     }
 
   }

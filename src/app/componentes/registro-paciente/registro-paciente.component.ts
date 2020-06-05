@@ -24,10 +24,13 @@ export class RegistroPacienteComponent implements OnInit {
   email:string;
   dni:number;
   clave:string;
-  archivoFoto:File;
-  urlFoto:string;
+  archivoFoto:File[];
+  urlFotoUno:string;
+  urlFotoDos:string;
   nuevoUsuario;
-  referenciaStorage;
+  referenciaFotoUno:AngularFireStorageReference;
+  referenciaFotoDos:AngularFireStorageReference;
+  vistaPreviaImagenes;
 
   constructor(
     private usuarioService:UsuarioService,
@@ -36,30 +39,44 @@ export class RegistroPacienteComponent implements OnInit {
     private matDialog: MatDialog,
   ) {
     this.dniInput = new FormControl('', [Validators.pattern('^[0-9]*$')]); //controla el patrón del dni
+    this.archivoFoto = [];
    }
 
   ngOnInit(): void {
   }
 
   cambioArchivo(event) {
-    if (event.target.files.length > 0) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        this.archivoFoto = event.target.files[i];
+
+    let archivos = event.target.files;
+    this.vistaPreviaImagenes = [];
+    console.log("hola");
+
+    if (archivos) {
+        
+      for (let archivo of archivos) {
+        this.archivoFoto.push(archivo);
+
+        //Mostrar vista previa de la imagen
+        let reader = new FileReader();
+        
+        reader.onload = (e) => { 
+          this.vistaPreviaImagenes.push(e.target.result);
+        }
+        reader.readAsDataURL(archivo);            
       }
     }
-
   }
 
-  subirArchivo():AngularFireStorageReference {
-    let referencia:AngularFireStorageReference;
+  // subirArchivo(archivoFoto):AngularFireStorageReference {
+  //   let referencia:AngularFireStorageReference;
 
-    referencia = this.fstorage.getReferencia(this.archivoFoto.name);
-    this.referenciaStorage = this.fstorage.getReferencia(this.archivoFoto.name);
+  //   referencia = this.fstorage.getReferencia(archivoFoto.name);
+  //   this.referenciaStorage = this.fstorage.getReferencia(archivoFoto.name);
 
-    this.fstorage.subirArchivo(this.archivoFoto.name, this.archivoFoto);
+  //   this.fstorage.subirArchivo(archivoFoto.name, this.archivoFoto);
 
-    return referencia;
-  }
+  //   return referencia;
+  // }
 
   ///Valida que el dni solo acepte números
   getErrorMessage() {
@@ -73,22 +90,31 @@ export class RegistroPacienteComponent implements OnInit {
   ///Guarda al profesional en la base de datos
   registrarUsuario() {
 
-    let path;
-    let referencia:AngularFireStorageReference;
-    let tarea:AngularFireUploadTask;
+    let pathFotoUno;
+    let pathFotoDos;
+    let referenciaFotoUno:AngularFireStorageReference;
+    let referenciaFotoDos:AngularFireStorageReference;
+    let tareaUno:AngularFireUploadTask;
+    let tareaDos:AngularFireUploadTask;
+      
+    pathFotoUno= `pacientes/${Date.now()}_${this.archivoFoto[0].name}`;
+    pathFotoDos= `pacientes/${Date.now()}_${this.archivoFoto[1].name}`;
 
-    path= `profesionales/${Date.now()}_${this.archivoFoto.name}`;
+    this.referenciaFotoUno = this.fstorage.getReferencia(pathFotoUno);
+    this.referenciaFotoDos = this.fstorage.getReferencia(pathFotoDos);
 
-    referencia = this.fstorage.getReferencia(path);
-
-    tarea = this.fstorage.subirArchivo(path, this.archivoFoto);
-
+    tareaUno = this.fstorage.subirArchivo(pathFotoUno, this.archivoFoto[0]);
+    tareaDos = this.fstorage.subirArchivo(pathFotoDos, this.archivoFoto[1]);
+    
     console.log('sube');
-
-    tarea.snapshotChanges().pipe(
-      finalize(() => referencia.getDownloadURL().subscribe( url => {
-        this.urlFoto = url;
-        this.guardarUsuario();
+    
+    tareaUno.snapshotChanges().pipe(
+      finalize(() => this.referenciaFotoUno.getDownloadURL().subscribe( url => {
+        this.urlFotoUno = url;
+        this.referenciaFotoDos.getDownloadURL().subscribe( url => {
+          this.urlFotoDos = url;
+          this.guardarUsuario();
+        })
       }))
     ).subscribe();
   }
@@ -101,7 +127,7 @@ export class RegistroPacienteComponent implements OnInit {
       
       //Crear paciente
       this.nuevoUsuario = new Paciente(respuesta.user.uid, this.nombre, this.apellido,
-      this.dni, this.email, this.urlFoto, this.urlFoto);
+      this.dni, this.email, this.urlFotoUno, this.urlFotoDos);
 
       //Guardar metadatos del usuario en la foto
       metadatos = {
@@ -110,7 +136,13 @@ export class RegistroPacienteComponent implements OnInit {
         }
       }
 
-      this.referenciaStorage.updateMetadata(metadatos);
+      //Subir los metadatos, suscribirse a uno y después hacer el otro sino error
+      this.referenciaFotoUno.updateMetadata(metadatos).subscribe(metadatos => {
+        
+        this.referenciaFotoDos.updateMetadata(metadatos).subscribe();
+
+      }, error => console.log("Error:" + error));
+      
 
       //Guardar en la db
       this.usuarioService.createUsuario(this.nuevoUsuario).then( respuesta => {

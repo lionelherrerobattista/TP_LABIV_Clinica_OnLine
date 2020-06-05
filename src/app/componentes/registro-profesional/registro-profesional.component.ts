@@ -30,6 +30,7 @@ export class RegistroProfesionalComponent implements OnInit {
   urlFoto:string;
   nuevoUsuario;
   referenciaStorage;
+  vistaPreviaImagenes;
 
   constructor(
     private usuarioService:UsuarioService,
@@ -45,10 +46,33 @@ export class RegistroProfesionalComponent implements OnInit {
   }
 
   cambioArchivo(event) {
-    if (event.target.files.length > 0) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        this.archivoFoto = event.target.files[i];
+
+    let archivos = event.target.files;
+    this.vistaPreviaImagenes = [];
+    console.log("hola");
+
+    if (archivos) {
+      
+      
+      for (let archivo of archivos) {
+        this.archivoFoto = archivo;
+
+        console.log(archivo)
+        
+        //Mostrar vista previa de la imagen
+        let reader = new FileReader();
+        
+        reader.onload = (e) => { 
+          this.vistaPreviaImagenes.push(e.target.result);
+        }
+
+        reader.readAsDataURL(archivo); 
+        
+        
       }
+
+      console.log(this.vistaPreviaImagenes)
+
     }
 
   }

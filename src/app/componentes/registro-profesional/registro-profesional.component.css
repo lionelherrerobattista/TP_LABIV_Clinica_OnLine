@@ -29,10 +29,24 @@ form button {
 #div-cargarFoto {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 8vh;
+  
+  height: 15vh;
   margin-bottom: 5vh;
 
+}
+
+
+img {
+  width: 80px;
+  max-height: auto;
+  margin-right: 2vw;
+}
+
+#div-vista-previa {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 1vh;
 }
 
 #btn-especialidad {
