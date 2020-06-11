@@ -15,5 +15,10 @@
     <button mat-menu-item [routerLink]="['/lista/profesional']">Profesionales</button>
     <button mat-menu-item [routerLink]="['/lista/paciente']">Pacientes</button>
   </mat-menu>
+  <button mat-button [matMenuTriggerFor]="turnos">Turnos</button>
+  <mat-menu #turnos="matMenu">
+    <button mat-menu-item [routerLink]="['/turno/cargar']">Cargar Turno</button>
+    <button mat-menu-item [routerLink]="['/turno/pedir']">Pedir Turno</button>
+  </mat-menu>
   <button mat-button *ngIf="usuarioLogeado != null" (click)="cerrarSesion()">Cerrar Sesión</button>
 </mat-toolbar>

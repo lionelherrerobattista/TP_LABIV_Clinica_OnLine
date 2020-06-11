@@ -9,6 +9,8 @@ import { RegistroPacienteComponent } from './componentes/registro-paciente/regis
 import { ListaProfesionalesComponent } from './componentes/lista-profesionales/lista-profesionales.component';
 import { ListaAdminsComponent } from './componentes/lista-admins/lista-admins.component';
 import { ListaPacientesComponent } from './componentes/lista-pacientes/lista-pacientes.component';
+import { TurnoPedirComponent } from './componentes/turno-pedir/turno-pedir.component';
+import { TurnoCargarComponent } from './componentes/turno-cargar/turno-cargar.component';
 
 
 const routes: Routes = [
@@ -20,6 +22,8 @@ const routes: Routes = [
   {path: 'lista/administrador', component: ListaAdminsComponent},
   {path: 'lista/paciente', component: ListaPacientesComponent},
   {path: 'lista/profesional', component: ListaProfesionalesComponent},
+  {path: 'turno/cargar', component: TurnoCargarComponent},
+  {path: 'turno/pedir', component: TurnoPedirComponent},
   {path: 'login', component: LoginComponent},
   {path: 'principal', component: PrincipalComponent},
 ];

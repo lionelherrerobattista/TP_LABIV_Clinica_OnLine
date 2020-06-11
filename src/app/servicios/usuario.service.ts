@@ -3,8 +3,6 @@ import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Profesional } from '../clases/profesional';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Administrador } from '../clases/administrador';
-import { Paciente } from '../clases/paciente';
 import { Usuario } from '../clases/usuario';
 
 
@@ -22,7 +20,7 @@ export class UsuarioService {
     //Inicializar las listas
     this.listaUsuarios = new Subject<Usuario[]>();
 
-      //Guardo el documento de las fotos, el pipe es para tener el id
+      //El pipe es para mapear los datos
       this.listaOriginal = this.db.collection('usuarios').snapshotChanges().pipe(
         map(actions => {
           return actions.map(a => {

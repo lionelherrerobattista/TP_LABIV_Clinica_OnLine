@@ -1,0 +1,49 @@
+form {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(205, 121, 226, 0.774);
+    max-height: 90vh;
+    max-width: 80vw;
+    margin-bottom: 2vh;
+    padding: 2vh 2vw 2vh 2vw;
+    border-color: black;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+
+}
+
+
+#form-carga {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 92vh;
+    width: 98.5vw;
+    background-image: url(src\assets\img\background_login.jpg);
+}
+
+#div-atencion {
+    display: flex;
+    flex-direction: row;
+    
+}
+
+#div-atencion button { 
+    margin: 3vh 0 0 2vh;
+    height: 4.5vh;
+}
+
+mat-form-field {
+    margin: 2vh 0  0 2vw;
+}
+
+/* button {
+    margin: 2vh 0  0 2vw;
+    height: 5vh;
+} */
+
+table {
+    width: 50%;
+  }

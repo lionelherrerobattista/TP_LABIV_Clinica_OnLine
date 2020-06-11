@@ -1,26 +1,44 @@
 
 <div id="div-login">
 
-  <form class="example-form">
+  <form [formGroup]="reactiveForm" class="example-form">
 
     <h1>Clinica OnLine</h1>
 
     <mat-form-field appearance="outline">
       <mat-label>Correo electrónico</mat-label>
-      <input matInput [(ngModel)]="email" type="email" name="email" required>
+      <input matInput formControlName="emailReactive" [(ngModel)]="email" type="email" name="email" required>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Contraseña</mat-label>
-      <input matInput  [(ngModel)]="clave" type="password" name="clave" required>
+      <input matInput formControlName="passReactive"  [(ngModel)]="clave" type="password" name="clave" required>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="iniciarSesion()">Iniciar Sesión</button>
+    <div id="div-captcha">
+      <re-captcha formControlName="recaptchaReactive" (resolved)="resolved($event)" required></re-captcha>
+      
+    </div>
+
+    <button mat-raised-button color="primary" [disabled]="reactiveForm.invalid" (click)="iniciarSesion()">Iniciar Sesión</button>
 
     <div id="div-autocompletar">
-      <button mat-raised-button color="warn" (click)="completarLogin('admin')">Admin</button>
+      <div class="fila-btn">
+        <button mat-raised-button color="warn" (click)="completarLogin('admin')">Admin</button>
+        <button mat-raised-button color="warn" (click)="completarLogin('paciente1')">Paciente1</button>  
+        <button mat-raised-button color="warn" (click)="completarLogin('médico1')">Médico1</button>
+      </div>
+      <div class="fila-btn">
+        <button mat-raised-button color="warn" (click)="completarLogin('admin2')">Admin2</button>
+        <button mat-raised-button color="warn" (click)="completarLogin('paciente2')">Paciente2</button>
+        <button mat-raised-button color="warn" (click)="completarLogin('médico2')">Médico2</button>
+      </div>
     </div>
+
+    
   </form>
+
+  
 
 
 </div>

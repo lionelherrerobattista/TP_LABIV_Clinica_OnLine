@@ -9,6 +9,13 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTabsModule} from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table'  
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +41,10 @@ import { ListaAdminsComponent } from './componentes/lista-admins/lista-admins.co
 import { ListaPacientesComponent } from './componentes/lista-pacientes/lista-pacientes.component';
 import { ModalRegistroComponent } from './componentes/modal-registro/modal-registro.component';
 
-
+import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsModule } from 'ng-recaptcha';
+import { TurnoPedirComponent } from './componentes/turno-pedir/turno-pedir.component';
+import { TurnoCargarComponent } from './componentes/turno-cargar/turno-cargar.component';
+import { FormAtencionProfesionalComponent } from './componentes/form-atencion-profesional/form-atencion-profesional.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +59,10 @@ import { ModalRegistroComponent } from './componentes/modal-registro/modal-regis
     ListaProfesionalesComponent,
     ListaAdminsComponent,
     ListaPacientesComponent,
-    ModalRegistroComponent
+    ModalRegistroComponent,
+    TurnoPedirComponent,
+    TurnoCargarComponent,
+    FormAtencionProfesionalComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,8 +79,22 @@ import { ModalRegistroComponent } from './componentes/modal-registro/modal-regis
     ReactiveFormsModule,
     AngularFireStorageModule,
     MatDialogModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatTabsModule,
+    MatTableModule
   ],
-  providers: [],
+  providers: [{
+    provide: RECAPTCHA_SETTINGS,
+    useValue: {
+      siteKey: '6LezX6MZAAAAAHD6dEgAmVl8ECAJUzmB3jOMzkjd',
+    } as RecaptchaSettings,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,57 @@
+<div id="form-carga">
+    <form>
+        <mat-label>Día y horario de atención:</mat-label> 
+        <div id="div-atencion">
+            <mat-form-field>
+                <mat-label>Día</mat-label>
+                <mat-select [(ngModel)]="dia" name="dia">
+                    <mat-option value="lunes">Lunes</mat-option>
+                    <mat-option value="martes">Martes</mat-option>
+                    <mat-option value="miércoles">Miércoles</mat-option>
+                    <mat-option value="jueves">Jueves</mat-option>
+                    <mat-option value="viernes">Viernes</mat-option>
+                    <mat-option value="sábado">Sábado</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Horario</mat-label>
+                <mat-select [(ngModel)]="horario" name="horario">
+                    <mat-option value="8 a 14">8 a 14</mat-option>
+                    <mat-option value="14 a 20">14 a 20</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-raised-button (click)="agregarDiaHorario()">Cargar</button>
+        </div>
+    </form>    
+
+    
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Position Column -->
+    <ng-container matColumnDef="Día">
+      <th mat-header-cell *matHeaderCellDef> Día </th>
+      <td mat-cell *matCellDef="let element"> {{element.dia | titlecase }}  </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="Horario">
+      <th mat-header-cell *matHeaderCellDef> Horario </th>
+      <td mat-cell *matCellDef="let element"> {{element.horario}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Eliminar">
+        <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+        <td mat-cell *matCellDef="let element"><button mat-raised-button color="warn">Eliminar</button> </td>
+    </ng-container>
+    
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+  
+

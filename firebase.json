@@ -1,19 +1,10 @@
 {
-  "hosting": [
-    {
-      "target": "tpLabIVClinicaOnline",
-      "public": "dist/tpLabIVClinicaOnline",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    }
-  ]
+  "hosting": {
+    "public": "dist/tpLabIVClinicaOnline",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
 }
