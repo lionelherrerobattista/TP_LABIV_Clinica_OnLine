@@ -1,4 +1,5 @@
 import { Paciente } from './paciente';
+import { Profesional } from './profesional';
 
 export enum estadoTurno {
     aceptado = "aceptado",
@@ -11,19 +12,15 @@ export enum estadoTurno {
 export class Turno {
 
     idTurno?:string;
-    dia:string;
-    hora:string;
+    diaHora:Date;
     estado:string; //aceptado, rechazado, a confirmar
-    nombreProfesional:string;
-    especialidad:string;
+    profesional:Profesional;
     paciente:Paciente;
 
-    constructor(dia:string, hora:string, estado:string, nombreProfesional:string, especialidad:string, paciente:Paciente) {
-        this.dia= dia;
-        this.hora= hora;
-        this.estado= estado;
-        this.nombreProfesional= nombreProfesional;
-        this.especialidad= especialidad;
+    constructor(diaHora:Date, profesional:Profesional, paciente:Paciente) {
+        this.diaHora= diaHora;
+        this.estado= estadoTurno.aConfirmar;
+        this.profesional= profesional;
         this.paciente= paciente;   
     }
       

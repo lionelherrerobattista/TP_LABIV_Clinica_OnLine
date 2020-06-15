@@ -10,7 +10,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import {MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
@@ -107,7 +107,11 @@ import { CalendarioTurnoComponent } from './componentes/calendario-turno/calenda
     provide: RECAPTCHA_SETTINGS,
     useValue: {
       siteKey: '6LezX6MZAAAAAHD6dEgAmVl8ECAJUzmB3jOMzkjd',
-    } as RecaptchaSettings,
+    } as RecaptchaSettings,   
+  },
+  {
+    provide: MAT_DATE_LOCALE,
+    useValue: 'es-AR',
   }],
   bootstrap: [AppComponent]
 })

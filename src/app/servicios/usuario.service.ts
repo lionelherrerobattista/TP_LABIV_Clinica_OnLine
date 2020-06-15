@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, first } from 'rxjs/operators';
 import { Usuario } from '../clases/usuario';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -14,7 +15,10 @@ export class UsuarioService {
   listaUsuarios:Subject<Usuario[]>;
 
 
-  constructor(private db:AngularFirestore) {
+  constructor(
+    private db:AngularFirestore,
+    private authService:AuthService,
+  ) {
     
     //Inicializar las listas
     this.listaUsuarios = new Subject<Usuario[]>();
@@ -59,10 +63,20 @@ export class UsuarioService {
     return this.listaOriginal; 
   }
 
-  getUsuario(uid:string):Observable<Usuario[]> {
+  getUsuario(uid:string):Observable<Usuario> {
     return this.listaOriginal.pipe(
-      map( usuarios => usuarios.filter(usuario => usuario.uid == uid))
+      map( usuarios => usuarios.find(usuario => usuario.uid == uid))
     );
+  }
+
+  async getUsuarioActual(){
+    let usuarioLogeado = await this.authService.getUsuarioLogeado();
+    console.log(usuarioLogeado);
+    let usuario = await this.getUsuario(usuarioLogeado.uid).pipe(first()).toPromise();
+
+    console.log(usuario)
+
+    return usuario;
   }
 
   createUsuario(usuario:Usuario): Promise<DocumentReference> {
@@ -70,7 +84,7 @@ export class UsuarioService {
   }
 
   updateUsuario(usuario:Usuario) {
-    this.db.doc('usuarios/' + usuario.id).update(usuario);
+    this.db.doc('usuarios/' + usuario.id).update({...usuario});
   }
 
   deleteUsuario(usuario:Usuario) {

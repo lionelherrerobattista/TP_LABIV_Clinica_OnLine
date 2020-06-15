@@ -38,14 +38,14 @@ export class TurnoService {
   }
 
   createTurno(turno:Turno): Promise<DocumentReference> {
-    return this.db.collection('Turnos').add({...turno});//Si se crea como clase usar ...
+    return this.db.collection('turnos').add({...turno});//Si se crea como clase usar ...
   }
 
   updateTurno(turno:Turno) {
-    this.db.doc('Turnos/' + turno.idTurno).update(Turno);
+    this.db.doc('turnos/' + turno.idTurno).update(Turno);
   }
 
   deleteTurno(turno:Turno) {
-    this.db.doc('Turnos/' + turno.idTurno).delete();
+    this.db.doc('turnos/' + turno.idTurno).delete();
   }
 }

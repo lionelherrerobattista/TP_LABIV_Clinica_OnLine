@@ -1,11 +1,13 @@
 import { Usuario } from './usuario';
 import { Encuesta } from './encuesta';
+import { Turno } from './turno';
 
 
 export class Paciente extends Usuario {
   
   fotoDos:string;
   encuestas:Encuesta[];
+  turnos:Turno[];
 
   constructor(uid:string, nombre:string, apellido:string, dni:number, email:string, fotoUno:string, fotoDos:string) {
 
@@ -13,6 +15,7 @@ export class Paciente extends Usuario {
     
     this.fotoDos = fotoDos;
     this.encuestas = [];
+    this.turnos = [];
 
   }
 }

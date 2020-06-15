@@ -1,25 +1,31 @@
-<div id="form-carga">
+<div id="contenedor">
+    <mat-card id="profesional-card">
+        <mat-card-header>               
+            <mat-card-title>{{profesional.apellido | titlecase}}, {{profesional.nombre | titlecase}}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="profesional.foto" alt="Foto uno del profesional">
+        <mat-card-content>
+            <mat-label>Especialidad:</mat-label>
+            <p *ngFor="let especialidad of profesional.especialidades">{{especialidad}}</p>
+        </mat-card-content>
+    </mat-card>
+    
     <form>
-
         <mat-form-field>
             <mat-label>Elija una fecha</mat-label>
-            <input matInput [min]="limiteMin" [max]="limiteMax" [matDatepickerFilter]="comprobarFecha.bind(this)" [matDatepicker]="picker">
+            <input matInput (dateChange)="mostrarHorarioTurnos()" [(ngModel)]="dia" [min]="limiteMin" [max]="limiteMax"
+             [matDatepickerFilter]="comprobarFecha.bind(this)" [matDatepicker]="picker" name="dia" disabled>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
         </mat-form-field>
 
-
-        <mat-label>Día y horario de atención:</mat-label> 
-        <div id="div-atencion">
-            <mat-form-field>
-                <mat-label>Horario</mat-label>
-                <mat-select [(ngModel)]="horario" name="horario">
-                    <mat-option value="8 a 14">8 a 14</mat-option>
-                    <mat-option value="14 a 20">14 a 20</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <button mat-raised-button (click)="pedirTurno()">Cargar</button>
-        </div>
-        
+        <mat-form-field *ngIf="horasAtencion != undefined">
+            <mat-label>Elija la hora</mat-label>
+            <mat-select  [(ngModel)]="hora" name="hora" >
+                <mat-option *ngFor="let horaTurno of horasAtencion" [value]="horaTurno">{{horaTurno}}</mat-option>           
+            </mat-select>
+        </mat-form-field>
+            
+        <button mat-raised-button (click)="pedirTurno()">Pedir Turno</button>
     </form>    
 </div>

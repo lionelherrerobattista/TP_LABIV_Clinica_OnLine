@@ -1,0 +1,17 @@
+#contenedor {
+    display:flex;
+    flex-direction: row;
+    border-style: solid;
+    padding: 2vh 2vw 2vh 2vw;
+}
+
+#profesional-card{
+    margin-right: 2vw;
+}
+
+form {
+    display:flex;
+    flex-direction: column;
+    width: 25vw;
+    height: 25vh;
+}
