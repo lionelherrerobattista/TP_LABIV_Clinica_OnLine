@@ -1,1 +1,62 @@
-<p>turno-pedir works!</p>
+<app-menu></app-menu>
+<div id="contenedor">
+    
+    <mat-form-field>
+        <mat-label>Filtro</mat-label>
+        <input matInput (keyup)="aplicarFiltro($event)" >
+    </mat-form-field>
+
+    <mat-label>Seleccione el profesional:</mat-label>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+        <ng-container matColumnDef="Profesional">
+            <th mat-header-cell *matHeaderCellDef> Profesional </th>
+            <td mat-cell *matCellDef="let element"> {{element.apellido | titlecase}}, {{element.nombre | titlecase}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Especialidad">
+            <th mat-header-cell *matHeaderCellDef> Especialidad </th>
+            <td mat-cell *matCellDef="let element"> 
+                <div *ngFor="let especialidad of element.especialidades">
+                    <p>{{especialidad}}</p>
+                </div>
+            </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="Día">
+            <th mat-header-cell *matHeaderCellDef> Día </th>
+            <td mat-cell *matCellDef="let element"> 
+                <div *ngFor="let dia of element.diasAtencion">
+                    <p >{{dia.dia | titlecase}}</p>
+                </div>
+            </td>
+        </ng-container>
+        
+        <!-- Name Column -->
+        <ng-container matColumnDef="Hora">
+            <th mat-header-cell *matHeaderCellDef> Hora </th>
+            <td mat-cell *matCellDef="let element">
+                <div *ngFor="let dia of element.diasAtencion">
+                    <p >{{dia.horario}}</p>
+                </div>
+            </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button color="primary" (click)="pedirTurno(element)">Pedir Turno</button>
+            </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Rechazar">
+            <th mat-header-cell *matHeaderCellDef> Rechazar </th>
+            <td mat-cell *matCellDef="let element"> </td>
+        </ng-container>
+        
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <app-calendario-turno *ngIf="profesionalSeleccionado != undefined" [profesional]="profesionalSeleccionado"></app-calendario-turno>

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { Profesional } from '../clases/profesional';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { Usuario } from '../clases/usuario';
 
 
@@ -34,7 +33,7 @@ export class UsuarioService {
 
   ///Devuelve el listado entero de usuarios
   devolverListado(){
-    return this.listaUsuarios;
+    return this.listaOriginal;
   }
 
   filtrarListaPorPerfil(filtroPerfil:string){   
@@ -57,8 +56,13 @@ export class UsuarioService {
   }
 
   getUsuarios() {
-    return this.listaOriginal;
-    
+    return this.listaOriginal; 
+  }
+
+  getUsuario(uid:string):Observable<Usuario[]> {
+    return this.listaOriginal.pipe(
+      map( usuarios => usuarios.filter(usuario => usuario.uid == uid))
+    );
   }
 
   createUsuario(usuario:Usuario): Promise<DocumentReference> {
@@ -66,7 +70,6 @@ export class UsuarioService {
   }
 
   updateUsuario(usuario:Usuario) {
-    delete usuario.id;
     this.db.doc('usuarios/' + usuario.id).update(usuario);
   }
 

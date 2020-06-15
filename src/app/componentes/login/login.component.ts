@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
-      recaptchaReactive: new FormControl(null, Validators.required),
+      // recaptchaReactive: new FormControl(null, Validators.required),
       emailReactive: new FormControl('', Validators.required),
       passReactive: new FormControl('', Validators.required),
     });
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
         this.clave = 'alfredo1234';
         break;
       case 'médico1':
-        this.email = 'prueba@prueba.com';
+        this.email = 'jfer@clinicaonline.com';
         this.clave = 'prueba1234';
         break;
       case 'médico2':

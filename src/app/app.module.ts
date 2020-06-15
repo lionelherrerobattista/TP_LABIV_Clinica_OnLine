@@ -15,7 +15,9 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTabsModule} from '@angular/material/tabs';
-import { MatTableModule } from '@angular/material/table'  
+import { MatTableModule } from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCardModule} from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,6 +47,11 @@ import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsM
 import { TurnoPedirComponent } from './componentes/turno-pedir/turno-pedir.component';
 import { TurnoCargarComponent } from './componentes/turno-cargar/turno-cargar.component';
 import { FormAtencionProfesionalComponent } from './componentes/form-atencion-profesional/form-atencion-profesional.component';
+import { TurnoProfesionalComponent } from './componentes/turno-profesional/turno-profesional.component';
+import { TurnoAtenderComponent } from './componentes/turno-atender/turno-atender.component';
+import { EncuestaPacienteComponent } from './componentes/encuesta-paciente/encuesta-paciente.component';
+import { PacienteDetalleComponent } from './componentes/paciente-detalle/paciente-detalle.component';
+import { CalendarioTurnoComponent } from './componentes/calendario-turno/calendario-turno.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +70,11 @@ import { FormAtencionProfesionalComponent } from './componentes/form-atencion-pr
     TurnoPedirComponent,
     TurnoCargarComponent,
     FormAtencionProfesionalComponent,
+    TurnoProfesionalComponent,
+    TurnoAtenderComponent,
+    EncuestaPacienteComponent,
+    PacienteDetalleComponent,
+    CalendarioTurnoComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +99,9 @@ import { FormAtencionProfesionalComponent } from './componentes/form-atencion-pr
     MatCheckboxModule,
     MatSelectModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatCardModule,
   ],
   providers: [{
     provide: RECAPTCHA_SETTINGS,

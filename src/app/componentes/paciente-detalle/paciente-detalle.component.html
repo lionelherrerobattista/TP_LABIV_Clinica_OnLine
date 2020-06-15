@@ -1,0 +1,13 @@
+<mat-card class="paciente-card">
+    <mat-card-header>               
+        <mat-card-title>{{paciente.apellido | titlecase}}, {{paciente.nombre | titlecase}}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src]="paciente.foto" alt="Foto uno del paciente">
+    <img mat-card-image [src]="paciente.fotoDos" alt="Foto dos del paciente">
+    <mat-card-content>
+        <p>Dni: {{paciente.dni}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="iniciarEncuesta()">Finalizar Consulta</button>
+    </mat-card-actions>
+</mat-card>

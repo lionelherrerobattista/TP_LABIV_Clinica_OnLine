@@ -3,7 +3,12 @@
 <app-menu></app-menu>
 <mat-tab-group mat-stretch-tabs>
     <mat-tab label="Cargar Horarios"><app-form-atencion-profesional></app-form-atencion-profesional></mat-tab>
-    <mat-tab label="Turnos"> Content 2 </mat-tab>
-    <mat-tab label="Pacientes"> Content 3 </mat-tab>
+    <mat-tab label="Turnos"> <app-turno-profesional></app-turno-profesional> </mat-tab>
+    <mat-tab label="Atender Paciente"> 
+        <app-turno-atender (enviarDetallePaciente)="tomarPacienteParaDetalle($event)"></app-turno-atender>
+        <app-paciente-detalle *ngIf="pacienteParaDetalle != undefined" [paciente]="pacienteParaDetalle"></app-paciente-detalle>
+    
+    </mat-tab>
+    <mat-tab label="Encuestas de los Pacientes"> Content 4 </mat-tab>
 </mat-tab-group>
 

@@ -4,7 +4,7 @@ form {
     background-color: rgba(205, 121, 226, 0.774);
     max-height: 90vh;
     max-width: 80vw;
-    margin-bottom: 2vh;
+    margin: 2vh 0 2vh 0;
     padding: 2vh 2vw 2vh 2vw;
     border-color: black;
     border-radius: 10px;
@@ -17,11 +17,14 @@ form {
 #form-carga {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     height: 92vh;
-    width: 98.5vw;
+    width: 98.9vw;
     background-image: url(src\assets\img\background_login.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #div-atencion {
@@ -39,11 +42,20 @@ mat-form-field {
     margin: 2vh 0  0 2vw;
 }
 
-/* button {
-    margin: 2vh 0  0 2vw;
-    height: 5vh;
-} */
+p {
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    text-align: center;
+}
 
 table {
     width: 50%;
-  }
+}
+
+th.mat-header-cell {
+    text-align: center!important;
+}
+
+td.mat-cell {
+    text-align: center!important;
+}

@@ -11,6 +11,8 @@ import { ListaAdminsComponent } from './componentes/lista-admins/lista-admins.co
 import { ListaPacientesComponent } from './componentes/lista-pacientes/lista-pacientes.component';
 import { TurnoPedirComponent } from './componentes/turno-pedir/turno-pedir.component';
 import { TurnoCargarComponent } from './componentes/turno-cargar/turno-cargar.component';
+import { EncuestaPacienteComponent } from './componentes/encuesta-paciente/encuesta-paciente.component';
+import { CalendarioTurnoComponent } from './componentes/calendario-turno/calendario-turno.component';
 
 
 const routes: Routes = [
@@ -26,6 +28,8 @@ const routes: Routes = [
   {path: 'turno/pedir', component: TurnoPedirComponent},
   {path: 'login', component: LoginComponent},
   {path: 'principal', component: PrincipalComponent},
+  {path: 'encuesta/paciente', component: EncuestaPacienteComponent},
+  {path: 'calendario', component: CalendarioTurnoComponent},
 ];
 
 @NgModule({

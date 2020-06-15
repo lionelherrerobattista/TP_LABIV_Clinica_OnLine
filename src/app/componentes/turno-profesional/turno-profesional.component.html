@@ -1,0 +1,86 @@
+<div id="contenedor">
+  <table mat-table [dataSource]="turnosParaConfirmar" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Position Column -->
+    <ng-container matColumnDef="Día">
+      <th mat-header-cell *matHeaderCellDef> Día </th>
+      <td mat-cell *matCellDef="let element"> {{element.dia | titlecase }}  </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="Hora">
+      <th mat-header-cell *matHeaderCellDef> Hora </th>
+      <td mat-cell *matCellDef="let element"> {{element.hora}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="Paciente">
+      <th mat-header-cell *matHeaderCellDef> Paciente </th>
+      <td mat-cell *matCellDef="let element"> {{element.paciente.nombre | titlecase}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let element"> {{element.estado | titlecase}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" (click)="aceptarTurno(element)">Aceptar</button>
+          <button  mat-raised-button color="warn" (click)="cancelarTurno(element)">Rechazar</button>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Rechazar">
+        <th mat-header-cell *matHeaderCellDef> Rechazar </th>
+        <td mat-cell *matCellDef="let element"> </td>
+    </ng-container>
+    
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <table mat-table [dataSource]="turnosConfirmados" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Position Column -->
+    <ng-container matColumnDef="Día">
+      <th mat-header-cell *matHeaderCellDef> Día </th>
+      <td mat-cell *matCellDef="let element"> {{element.dia | titlecase }}  </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="Hora">
+      <th mat-header-cell *matHeaderCellDef> Hora </th>
+      <td mat-cell *matCellDef="let element"> {{element.hora}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="Paciente">
+      <th mat-header-cell *matHeaderCellDef> Paciente </th>
+      <td mat-cell *matCellDef="let element"> {{element.paciente.nombre | titlecase}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let element"> {{element.estado | titlecase}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let element">
+        <button  mat-raised-button color="warn" (click)="cancelarTurno(element)">Rechazar</button>
+      </td>
+  </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+    

@@ -1,0 +1,32 @@
+
+
+#contenedor {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    height: 92vh;
+    width: 98.9vw;
+    background-image: url(src\assets\img\background_login.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+table {
+    width: 70%;
+    margin-bottom: 2vh;
+}
+
+th.mat-header-cell {
+    text-align: center!important;
+}
+
+td.mat-cell {
+    text-align: center!important;
+}
+
+button {
+    margin-right: 1vw;
+}
