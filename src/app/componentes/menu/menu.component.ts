@@ -18,13 +18,17 @@ export class MenuComponent implements OnInit {
     this.obtenerUsuarioLogeado();
   }
 
-  obtenerUsuarioLogeado() {
-    this.authService.getUsuarioLogeado().then( user => {
-      this.usuarioLogeado = user;
-      console.log(this.usuarioLogeado);
-    });
+  // obtenerUsuarioLogeado() {
+  //   this.authService.getUsuarioLogeado().then( user => {
+  //     this.usuarioLogeado = user;
+  //     console.log(this.usuarioLogeado);
+  //   });
+  // }
 
+  async obtenerUsuarioLogeado() {
+    this.usuarioLogeado = await this.authService.getUsuarioLogeado();
 
+    console.log(this.usuarioLogeado);
   }
 
   cerrarSesion() {
@@ -32,5 +36,6 @@ export class MenuComponent implements OnInit {
       this.router.navigate(['login']);
     })
   }
+
 
 }

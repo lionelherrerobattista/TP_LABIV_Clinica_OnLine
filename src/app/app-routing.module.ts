@@ -12,24 +12,23 @@ import { ListaPacientesComponent } from './componentes/lista-pacientes/lista-pac
 import { TurnoPedirComponent } from './componentes/turno-pedir/turno-pedir.component';
 import { TurnoCargarComponent } from './componentes/turno-cargar/turno-cargar.component';
 import { EncuestaPacienteComponent } from './componentes/encuesta-paciente/encuesta-paciente.component';
-import { CalendarioTurnoComponent } from './componentes/calendario-turno/calendario-turno.component';
+import { AngularFireAuthGuard, redirectUnauthorizedTo, canActivate } from '@angular/fire/auth-guard';
 
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
   {path: '', component: PrincipalComponent},
-  {path: 'registro', component: RegistroComponent},
-  {path: 'registro/administrador', component: RegistroAdminComponent},
-  {path: 'registro/paciente', component: RegistroPacienteComponent},
-  {path: 'registro/profesional', component: RegistroProfesionalComponent},
-  {path: 'lista/administrador', component: ListaAdminsComponent},
-  {path: 'lista/paciente', component: ListaPacientesComponent},
-  {path: 'lista/profesional', component: ListaProfesionalesComponent},
-  {path: 'turno/cargar', component: TurnoCargarComponent},
-  {path: 'turno/pedir', component: TurnoPedirComponent},
+  {path: 'registro/administrador', component: RegistroAdminComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'registro/paciente', component: RegistroPacienteComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'registro/profesional', component: RegistroProfesionalComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'lista/administrador', component: ListaAdminsComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'lista/paciente', component: ListaPacientesComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'lista/profesional', component: ListaProfesionalesComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'turno/cargar', component: TurnoCargarComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'turno/pedir', component: TurnoPedirComponent, ...canActivate(redirectUnauthorizedToLogin)},
   {path: 'login', component: LoginComponent},
   {path: 'principal', component: PrincipalComponent},
   {path: 'encuesta/paciente', component: EncuestaPacienteComponent},
-  {path: 'calendario', component: CalendarioTurnoComponent},
 ];
 
 @NgModule({
