@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID  } from '@angular/core';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 //Material
@@ -52,6 +52,15 @@ import { TurnoAtenderComponent } from './componentes/turno-atender/turno-atender
 import { EncuestaPacienteComponent } from './componentes/encuesta-paciente/encuesta-paciente.component';
 import { PacienteDetalleComponent } from './componentes/paciente-detalle/paciente-detalle.component';
 import { CalendarioTurnoComponent } from './componentes/calendario-turno/calendario-turno.component';
+import { PacientePedirTurnoComponent } from './componentes/paciente-pedir-turno/paciente-pedir-turno.component';
+import { PacienteListaTurnosComponent } from './componentes/paciente-lista-turnos/paciente-lista-turnos.component';
+
+//Import para cambiar el idioma
+import { registerLocaleData } from '@angular/common';
+import localeAr from '@angular/common/locales/es-AR';
+
+// the second parameter 'fr-FR' is optional
+registerLocaleData(localeAr, 'es-AR');
 
 @NgModule({
   declarations: [
@@ -75,6 +84,8 @@ import { CalendarioTurnoComponent } from './componentes/calendario-turno/calenda
     EncuestaPacienteComponent,
     PacienteDetalleComponent,
     CalendarioTurnoComponent,
+    PacientePedirTurnoComponent,
+    PacienteListaTurnosComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,7 +123,9 @@ import { CalendarioTurnoComponent } from './componentes/calendario-turno/calenda
   {
     provide: MAT_DATE_LOCALE,
     useValue: 'es-AR',
-  }],
+  },
+  { provide: LOCALE_ID, useValue: "es-AR" },
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

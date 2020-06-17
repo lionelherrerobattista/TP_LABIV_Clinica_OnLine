@@ -3,7 +3,7 @@
         <mat-card-header>               
             <mat-card-title>{{profesional.apellido | titlecase}}, {{profesional.nombre | titlecase}}</mat-card-title>
         </mat-card-header>
-        <img mat-card-image [src]="profesional.foto" alt="Foto uno del profesional">
+        <img mat-card-image [src]="profesional.foto" alt="Foto del profesional">
         <mat-card-content>
             <mat-label>Especialidad:</mat-label>
             <p *ngFor="let especialidad of profesional.especialidades">{{especialidad}}</p>
@@ -13,7 +13,7 @@
     <form>
         <mat-form-field>
             <mat-label>Elija una fecha</mat-label>
-            <input matInput (dateChange)="mostrarHorarioTurnos()" [(ngModel)]="dia" [min]="limiteMin" [max]="limiteMax"
+            <input matInput (dateChange)="mostrarHorarioTurnos()" [(ngModel)]="diaSeleccionado" [min]="limiteMin" [max]="limiteMax"
              [matDatepickerFilter]="comprobarFecha.bind(this)" [matDatepicker]="picker" name="dia" disabled>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker disabled="false"></mat-datepicker>
@@ -21,8 +21,8 @@
 
         <mat-form-field *ngIf="horasAtencion != undefined">
             <mat-label>Elija la hora</mat-label>
-            <mat-select  [(ngModel)]="hora" name="hora" >
-                <mat-option *ngFor="let horaTurno of horasAtencion" [value]="horaTurno">{{horaTurno}}</mat-option>           
+            <mat-select  [(ngModel)]="turnoSeleccionado" name="turnoSeleccionado" >
+                <mat-option *ngFor="let horaTurno of horasAtencion" [value]="horaTurno">{{horaTurno | date:'HH:mm'}}</mat-option>           
             </mat-select>
         </mat-form-field>
             

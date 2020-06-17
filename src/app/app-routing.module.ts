@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PrincipalComponent } from './componentes/principal/principal.component';
-import { RegistroComponent } from './componentes/registro/registro.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { RegistroProfesionalComponent } from './componentes/registro-profesional/registro-profesional.component';
 import { RegistroAdminComponent } from './componentes/registro-admin/registro-admin.component';
@@ -12,7 +11,7 @@ import { ListaPacientesComponent } from './componentes/lista-pacientes/lista-pac
 import { TurnoPedirComponent } from './componentes/turno-pedir/turno-pedir.component';
 import { TurnoCargarComponent } from './componentes/turno-cargar/turno-cargar.component';
 import { EncuestaPacienteComponent } from './componentes/encuesta-paciente/encuesta-paciente.component';
-import { AngularFireAuthGuard, redirectUnauthorizedTo, canActivate } from '@angular/fire/auth-guard';
+import { redirectUnauthorizedTo, canActivate } from '@angular/fire/auth-guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 

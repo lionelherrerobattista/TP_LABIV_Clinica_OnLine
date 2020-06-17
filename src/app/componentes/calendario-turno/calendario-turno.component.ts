@@ -6,6 +6,7 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Turno } from 'src/app/clases/turno';
 import { Paciente } from 'src/app/clases/paciente';
 import { DocumentReference } from '@angular/fire/firestore';
+import { Timestamp } from 'rxjs/internal/operators/timestamp';
 
 @Component({
   selector: 'app-calendario-turno',
@@ -16,17 +17,17 @@ export class CalendarioTurnoComponent implements OnInit {
 
   limiteMax:Date;
   limiteMin:Date;
-  dia:Date;
-  hora:string;
-  horasAtencion:string[];
-  mostrar=false;
+  diaSeleccionado:Date;
+  turnoSeleccionado:Date;
+  horasAtencion:Date[];
+  mostrar:boolean;
   @Input()profesional:Profesional;
 
   constructor(
     private turnoService:TurnoService,
     private usuarioService:UsuarioService,
-
   ) {
+    this.mostrar = false;
     this.limiteMin = new Date();
     this.limiteMax = new Date();
   }
@@ -35,38 +36,31 @@ export class CalendarioTurnoComponent implements OnInit {
    this.limiteMax.setDate(this.limiteMin.getDate() + 15);
   }
 
-  ///Guarda el turno en las distintas colecciones
+  ///Guarda el turno seleccionado por el paciente en las distintas colecciones
   async pedirTurno() {
-    let turno:Turno;
-    let turnos:Turno[];
+    let turnoSeleccionado:Turno;
+    let listaTurnos:Turno[];
     let referenciaTurno:DocumentReference;
     let usuario = await this.usuarioService.getUsuarioActual();
-    console.log(usuario);
     let paciente = <Paciente> usuario;
-    //Formatear la hora
-    let horaEntera = this.hora.split(':');
-    let hora = +horaEntera[0];
-    let minutos = +horaEntera[1];
+
+    turnoSeleccionado = new Turno(this.turnoSeleccionado, this.profesional, paciente);
+
+    //Guardar los turnos en la colección de turnos
+    referenciaTurno = await this.turnoService.createTurno(turnoSeleccionado);
     
-    this.dia.setHours(this.dia.getHours() + hora);
-    this.dia.setMinutes(this.dia.getMinutes() + minutos);
+    //Replicar los datos en las demás colecciones
+    listaTurnos = await this.turnoService.getTurno(referenciaTurno.id).pipe(first()).toPromise();
 
-    turno = new Turno(this.dia, this.profesional, paciente);
-
-    console.log(turno);
-
-    //Guardar los turnos en las colecciones
-    referenciaTurno = await this.turnoService.createTurno(turno);
-    turnos = await this.turnoService.getTurno(referenciaTurno.id).pipe(first()).toPromise();
-
-    this.profesional.turnos.push(turnos[0]);
-    paciente.turnos.push(turnos[0]);
+    this.profesional.turnos.push(listaTurnos[0]);
+    paciente.turnos.push(listaTurnos[0]);
 
     this.usuarioService.updateUsuario(this.profesional);
     this.usuarioService.updateUsuario(paciente);
     
   }
 
+  ///Filtra las fechas para mostrar solo aquellas que están disponibles
   comprobarFecha(d: Date | null):boolean {
     
     const dia = (d || new Date()).getDay();
@@ -87,10 +81,12 @@ export class CalendarioTurnoComponent implements OnInit {
   }
 
 
+  //Muestra el selector de los horarios disponibles para sacar turno
+  //en el día seleccionado
   mostrarHorarioTurnos() {
 
     let numeroDia;
-    let diaSeleccionado = this.dia.getDay()
+    let diaSeleccionado = this.diaSeleccionado.getDay()
 
     for(let atencion of this.profesional.diasAtencion) {
       numeroDia= this.convertirDiaNumero(atencion.dia);
@@ -121,12 +117,15 @@ export class CalendarioTurnoComponent implements OnInit {
 
   }
 
-  generarHorarios(horario) {
+  ///Genera los horarios del día seleccionado disponibles 
+  async generarHorarios(horario) {
     
     let horaInicio:number;
     let horaFin:number;
-    this.horasAtencion = []
+    let listaTurnos = await this.turnoService.getTurnos().pipe(first()).toPromise();
+    this.horasAtencion = [];
 
+    //Horarios de atención de los médicos
     switch(horario) {
       case "8 a 14":
         horaInicio = 8;
@@ -138,13 +137,57 @@ export class CalendarioTurnoComponent implements OnInit {
       break;
     }
 
-    //Agregar los horarios
+    //Agregar los horarios, creo variables date
+    let horaDisponible;
     for(let i = horaInicio; i < horaFin; i++){
       
       //8
-      this.horasAtencion.push(i.toString() + ":00"); 
+      horaDisponible = new Date(this.diaSeleccionado); //las 0 del día seleccionado  
+      horaDisponible.setHours(horaDisponible.getHours() + i);
+      this.horasAtencion.push(horaDisponible); 
       //8:30, etc...
-      this.horasAtencion.push(i.toString() + ":30");
+      horaDisponible = new Date(this.diaSeleccionado);
+      horaDisponible.setHours(horaDisponible.getHours() + i);
+      horaDisponible.setMinutes(horaDisponible.getMinutes() + 30);
+      this.horasAtencion.push(horaDisponible);
+    }
+
+    //Buscar los turnos para el mismo día
+    let turnosDelDia = listaTurnos.filter(turno => {
+      let sonIguales = false;
+      let turnoParseado:Date = turno.diaHora.toDate();
+      turnoParseado = new Date(turnoParseado.toDateString());
+
+      //Comparar turnos del mismo día
+      if(Number(turnoParseado) === Number(this.diaSeleccionado)) {
+        sonIguales = true;
+      }
+      return sonIguales;
+    });
+
+    //Eliminar horarios que ya estan tomados
+    this.eliminarHorarioTomado(turnosDelDia);
+ 
+  }
+
+  ///Elimina los horarios que ya fueron tomados para ese día
+  eliminarHorarioTomado(turnosDelDia) {
+
+    let turnoParseado;
+
+    for(let turno of turnosDelDia) {
+      turnoParseado = turno.diaHora.toDate();    
+      for(let atencion of this.horasAtencion) {
+        //Si son iguales lo elimino de la lista
+        if(Number(turnoParseado) === Number(atencion)) {
+          let index = this.horasAtencion.indexOf(atencion);
+
+          if (index > -1) {
+            this.horasAtencion.splice(index, 1);
+            break;
+          }
+        }
+      }      
     }
   }
 }
