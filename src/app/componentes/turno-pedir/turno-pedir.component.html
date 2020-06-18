@@ -2,5 +2,5 @@
 <mat-tab-group mat-stretch-tabs>
     <mat-tab label="Pedir Turno"> <app-paciente-pedir-turno></app-paciente-pedir-turno></mat-tab>
     <mat-tab label="Mis turnos">  <app-paciente-lista-turnos></app-paciente-lista-turnos></mat-tab>
-    <mat-tab label="Encuestas">  </mat-tab>
+    <mat-tab label="Encuestas"> <app-encuesta-paciente *ngIf="pacienteActual != undefined" [paciente]="pacienteActual"></app-encuesta-paciente>  </mat-tab>
 </mat-tab-group>

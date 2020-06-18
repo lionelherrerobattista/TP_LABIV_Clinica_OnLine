@@ -1,33 +1,73 @@
 <div id="contenedor">
-    
-    <mat-form-field class="example-full-width">
-        <mat-label>Reseña del paciente:</mat-label>
-        <textarea matInput placeholder="Escriba la reseña aquí..."></textarea>
-      </mat-form-field>
 
-    <form>
-        <mat-label>Encuesta del paciente:</mat-label> 
-    
-        <mat-form-field>
-            <mat-label>Predisposición:</mat-label>
-            <mat-select [(ngModel)]="predisposicion" name="predisposicion">
-                <mat-option value="excelente">Excelente</mat-option>
-                <mat-option value="buena">Buena</mat-option>
-                <mat-option value="regular">Regular</mat-option>
-                <mat-option value="mala">Mala</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Puntualidad:</mat-label>
-            <mat-select [(ngModel)]="puntualidad" name="puntualidad">
-                <mat-option value="sí">Sí</mat-option>
-                <mat-option value="no">No</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-label>¿Volvería a atenderlo?</mat-label>
-        <mat-checkbox [(ngModel)]="predisposicion">Sí</mat-checkbox>
+    <table mat-table [dataSource]="listaTurnosAtendidos" class="mat-elevation-z8">
+  
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="Día">
+          <th mat-header-cell *matHeaderCellDef> Día </th>
+          <td mat-cell *matCellDef="let element"> {{element.diaHora.toDate() | date:'dd MMMM yyyy' }}  </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="Hora">
+          <th mat-header-cell *matHeaderCellDef> Hora </th>
+          <td mat-cell *matCellDef="let element"> {{element.diaHora.toDate() | date:'HH:mm'}} </td>
+        </ng-container>
         
-        <button mat-raised-button (click)="guardarEncuesta()">Guardar Encuesta</button>              
-    </form>   
+        <ng-container matColumnDef="Profesional">
+          <th mat-header-cell *matHeaderCellDef> Profesional </th>
+          <td mat-cell *matCellDef="let element"> {{element.profesional.apellido | titlecase}}, {{element.profesional.nombre | titlecase}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Estado">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let element"> {{element.estado | titlecase}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+              <button *ngIf='element.estado != "cancelado"'   mat-raised-button color="warn" (click)="completarEncuesta(element)">Completar Encuesta</button>
+            </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    <!-- cargar lista de encuestas pendientes -->
+    <div id="div-encuesta" *ngIf="encuestaSeleccionada">
+        <mat-form-field class="example-full-width">
+            <mat-label>Comentario del paciente:</mat-label>
+            <textarea matInput [(ngModel)]="comentarioDelPaciente" name="comentarioPaciente" placeholder="Escriba la reseña aquí..."></textarea>
+          </mat-form-field>
+    
+        <form>
+            <mat-label>Encuesta del paciente:</mat-label> 
+        
+            <mat-form-field>
+                <mat-label>Atención:</mat-label>
+                <mat-select [(ngModel)]="atencion" name="predisposicion">
+                    <mat-option value="excelente">Excelente</mat-option>
+                    <mat-option value="buena">Buena</mat-option>
+                    <mat-option value="regular">Regular</mat-option>
+                    <mat-option value="mala">Mala</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <mat-label>Puntualidad:</mat-label>
+            <mat-radio-group [(ngModel)]="puntualidad" name="puntualidad" aria-label="Seleccione una opción:">
+                <mat-radio-button value="sí">Sí</mat-radio-button>
+                <mat-radio-button value="no">No</mat-radio-button>
+            </mat-radio-group>
+            
+    
+            <mat-label>¿Volvería a solicitar turno?</mat-label>
+            <mat-checkbox [(ngModel)]="turnoOtraVez"  name="turnoOtraVez" >Sí</mat-checkbox>
+            
+            <button mat-raised-button (click)="guardarEncuesta()">Guardar Encuesta</button>              
+        </form>   
+    </div>
 </div>

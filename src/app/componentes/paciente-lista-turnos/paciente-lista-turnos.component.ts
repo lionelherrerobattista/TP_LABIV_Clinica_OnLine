@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Paciente } from 'src/app/clases/paciente';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
-import { Turno } from 'src/app/clases/turno';
+import { Turno, estadoTurno } from 'src/app/clases/turno';
+import { TurnoService } from 'src/app/servicios/turno.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-paciente-lista-turnos',
@@ -18,6 +20,7 @@ export class PacienteListaTurnosComponent implements OnInit {
   constructor(
     private authService:AuthService,
     private usuarioService:UsuarioService,
+    private turnoService:TurnoService,
   ) {
 
   }
@@ -52,7 +55,37 @@ export class PacienteListaTurnosComponent implements OnInit {
     }  
   }
 
-  cancelarTurno() {
+  async cancelarTurno(turno:Turno) {
+    let profesional;
+
+    profesional = await this.usuarioService.getUsuario(turno.profesional.uid).pipe(first()).toPromise();
+    console.log(profesional);
+
+    //Tomar las 3 entidades(turno, paciente, profesional)
+    //cambiar estado a cancelado
+
+    turno.estado = estadoTurno.cancelado;
+    this.turnoService.updateTurno(turno);
+
+    //buscar el turno del paciente y actualizar
+    for(let turnoPaciente of this.paciente.turnos) {
+      if(turno.idTurno == turnoPaciente.idTurno) {
+        turnoPaciente.estado = estadoTurno.cancelado;
+      }
+    }
+
+    this.usuarioService.updateUsuario(this.paciente);
+
+    //buscar el turno del profesional y actualizar
+    for(let turnoProfesional of profesional.turnos) {
+      if(turno.idTurno == turnoProfesional.idTurno) {
+        turnoProfesional.estado = estadoTurno.cancelado;
+      }
+    }
+
+    this.usuarioService.updateUsuario(profesional);
+
+    console.log("turno cancelado");
 
   }
 

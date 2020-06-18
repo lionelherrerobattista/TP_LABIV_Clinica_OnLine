@@ -18,6 +18,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCardModule} from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -58,6 +59,8 @@ import { PacienteListaTurnosComponent } from './componentes/paciente-lista-turno
 //Import para cambiar el idioma
 import { registerLocaleData } from '@angular/common';
 import localeAr from '@angular/common/locales/es-AR';
+import { EncuestaProfesionalComponent } from './componentes/encuesta-profesional/encuesta-profesional.component';
+import { HistoriaClinicaCargarComponent } from './componentes/historia-clinica-cargar/historia-clinica-cargar.component';
 
 // the second parameter 'fr-FR' is optional
 registerLocaleData(localeAr, 'es-AR');
@@ -86,6 +89,8 @@ registerLocaleData(localeAr, 'es-AR');
     CalendarioTurnoComponent,
     PacientePedirTurnoComponent,
     PacienteListaTurnosComponent,
+    EncuestaProfesionalComponent,
+    HistoriaClinicaCargarComponent,
   ],
   imports: [
     BrowserModule,
@@ -113,6 +118,7 @@ registerLocaleData(localeAr, 'es-AR');
     MatTableModule,
     MatPaginatorModule,
     MatCardModule,
+    MatFormFieldModule
   ],
   providers: [{
     provide: RECAPTCHA_SETTINGS,

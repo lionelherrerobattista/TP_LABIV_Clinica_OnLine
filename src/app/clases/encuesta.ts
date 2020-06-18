@@ -1,6 +1,8 @@
+import { Usuario } from './usuario';
+
 export enum tipoEncuesta {
-    sobrePaciente,
-    sobreProfesional,
+    sobrePaciente = "sobre paciente",
+    sobreProfesional = "sobre profesional",
 }
 
 export interface Pregunta{
@@ -11,16 +13,23 @@ export interface Pregunta{
 export class Encuesta {
     idEncuesta?:string;
     tipo:tipoEncuesta;
-    uidUsuarioEncuestado:string;
-    uidUsuarioObjeto:string;
-    idTurno:string;
     preguntas:Pregunta[];
+    usuarioEncuestado:Usuario;
+    usuarioObjetoEncuesta:Usuario;
+    idTurno:string;
+    comentario?:string;
 
-    constructor(tipo:tipoEncuesta, uidUsuarioEncuestado:string, uidUsuarioObjeto:string, idTurno:string, preguntas:Pregunta[]) {
+    constructor(tipo:tipoEncuesta, usuarioEncuestado:Usuario, usuarioObjetoEncuesta:Usuario, idTurno:string, preguntas:Pregunta[], comentario?:string) {
         this.tipo = tipo;
-        this.uidUsuarioEncuestado = uidUsuarioEncuestado;
-        this.uidUsuarioObjeto = uidUsuarioObjeto;
+        this.usuarioEncuestado = usuarioEncuestado;
+        this.usuarioObjetoEncuesta = usuarioObjetoEncuesta;
         this.preguntas = preguntas;
+        this.idTurno = idTurno;
+        
+        if(comentario) {
+            this.comentario = comentario;
+        }
+        
     }
 
 }

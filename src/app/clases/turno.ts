@@ -6,6 +6,7 @@ export enum estadoTurno {
     rechazado = "rechazado",
     aConfirmar = "a confirmar",
     atendido = "atendido",
+    cancelado = "cancelado",
 }
   
   
@@ -20,8 +21,16 @@ export class Turno {
     constructor(diaHora:any, profesional:Profesional, paciente:Paciente) {
         this.diaHora= diaHora;
         this.estado= estadoTurno.aConfirmar;
+
+        //Saco el array de turnos
         this.profesional= profesional;
-        this.paciente= paciente;   
+        delete this.profesional.turnos;
+
+        //Saco el array de turnos
+        this.paciente= paciente; 
+        delete this.paciente.turnos;
     }
+
+    
       
 }

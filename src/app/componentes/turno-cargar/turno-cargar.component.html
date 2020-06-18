@@ -2,13 +2,14 @@
 
 <app-menu></app-menu>
 <mat-tab-group mat-stretch-tabs>
-    <mat-tab label="Cargar Horarios"><app-form-atencion-profesional></app-form-atencion-profesional></mat-tab>
-    <mat-tab label="Turnos"> <app-turno-profesional></app-turno-profesional> </mat-tab>
+    <mat-tab label="Cargar Horarios"><app-form-atencion-profesional [usuarioActual]="usuarioActual" *ngIf="usuarioActual != undefined"></app-form-atencion-profesional></mat-tab>
+    <mat-tab label="Turnos"> <app-turno-profesional [usuarioActual]="usuarioActual" *ngIf="usuarioActual != undefined"></app-turno-profesional> </mat-tab>
     <mat-tab label="Atender Paciente"> 
-        <app-turno-atender (enviarDetallePaciente)="tomarPacienteParaDetalle($event)"></app-turno-atender>
-        <app-paciente-detalle *ngIf="pacienteParaDetalle != undefined" [paciente]="pacienteParaDetalle"></app-paciente-detalle>
-    
+        <div id="contenedor">
+            <app-turno-atender [usuarioActual]="usuarioActual" *ngIf="usuarioActual != undefined" (enviarDetallePaciente)="tomarPacienteParaDetalle($event)"></app-turno-atender>
+            <app-historia-clinica-cargar *ngIf="pacienteParaDetalle != undefined" [pacienteActual]="pacienteParaDetalle" [profesionalActual]="usuarioActual"></app-historia-clinica-cargar>
+        </div>
     </mat-tab>
-    <mat-tab label="Encuestas de los Pacientes"> Content 4 </mat-tab>
+    <mat-tab label="Encuestas de los Pacientes"> <app-encuesta-profesional></app-encuesta-profesional> </mat-tab>
 </mat-tab-group>
 

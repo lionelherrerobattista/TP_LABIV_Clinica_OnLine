@@ -14,7 +14,7 @@ export class Profesional extends Usuario {
   especialidades:string[];
   aprobado:boolean;
   diasAtencion:HorarioAtencion[];
-  turnos:Turno[];
+  turnos?:Turno[];
   encuestas:Encuesta[];
 
   constructor(uid:string, nombre:string, apellido:string, dni:number, email:string, foto:string, especialidades:string[], diasAtencion?:HorarioAtencion[], turnos?:Turno[]) {

@@ -1,0 +1,74 @@
+<div id="contenedor" *ngIf="paciente != undefined">
+
+    <mat-card class="paciente-card">
+        <mat-card-header>               
+            <mat-card-title>{{paciente.apellido | titlecase}}, {{paciente.nombre | titlecase}}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="paciente.foto" alt="Foto uno del paciente">
+        <img mat-card-image [src]="paciente.fotoDos" alt="Foto dos del paciente">
+        <mat-card-content>
+            <p>Dni: {{paciente.dni}}</p>
+            <div *ngIf="paciente.historiaClinica != undefined">
+                <p>Edad: {{paciente.historiaClinica.edad}}</p>
+                <p>Temperatura Corporal: {{paciente.historiaClinica.temperaturaCorporal}}</p>
+                <p>Presión: {{paciente.historiaClinica.presion}}</p>
+
+                <div *ngIf="paciente.historiaClinica.datosExtra" id="#datos-adicionales">
+                    <mat-label>Datos adicionales:</mat-label>
+                        <p *ngFor="let dato of paciente.historiaClinica.datosExtra">{{dato.nombreCampo | titlecase}}: {{dato.valor}}</p>
+                </div>
+            </div>        
+        </mat-card-content>
+        <mat-card-actions>
+            <button *ngIf="paciente.historiaClinica == undefined" mat-button (click)="crearHistoriaClinica()">Crear Historia Clinica</button>
+            <button mat-button (click)="actualizarHistoriaClinica()">Actualizar Historia Clinica</button>
+        </mat-card-actions>
+    </mat-card>
+
+    <div *ngIf="completarHistoriaClinica" id="div-input-hc">
+        <form [formGroup]="reactiveForm" class="example-form">
+            
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Edad:</mat-label>
+                    <input matInput formControlName="edadReactive" [(ngModel)]="paciente.historiaClinica.edad" type="text" name="edad" [value]="paciente.historiaClinica.edad" required>
+                </mat-form-field>
+    
+                <mat-form-field appearance="outline">
+                    <mat-label>Temperatura Corporal</mat-label>
+                    <input matInput formControlName="temperaturaCorporalReactive" [(ngModel)]="paciente.historiaClinica.temperaturaCorporal" type="text" name="temperaturaCorporal" required>
+                </mat-form-field>
+    
+                <mat-form-field appearance="outline">
+                    <mat-label>Presión</mat-label>
+                    <input matInput formControlName="presionReactive" [(ngModel)]="paciente.historiaClinica.presion" type="text" name="presion" required>
+                </mat-form-field>
+            </div>
+            
+
+            <div id="div-especialidades" *ngIf="paciente.historiaClinica.datosExtra > 0">
+                <mat-label>Datos Extra</mat-label>
+                <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="dato.nombreCampo" type="text" name="campo"  *ngFor="let dato of paciente.historiaClinica.datosExtra">:
+                <input matInput [ngModelOptions]="{standalone: true}"  [(ngModel)]="dato.valor" type="text" name="valor"  *ngFor="let dato of paciente.historiaClinica.datosExtra">
+            </div>
+            
+
+            <div id="div-agregar-datos" *ngIf="agregarCampos"> 
+                <mat-label>Datos Extra (max. 3):</mat-label>
+                <mat-form-field>
+                    <mat-label>Nombre campo</mat-label>
+                    <input matInput [ngModelOptions]="{standalone: true}"  [(ngModel)]="datoAdicional.nombreCampo" type="text" name="campo">
+                    
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Valor</mat-label>
+                    <input matInput [ngModelOptions]="{standalone: true}"  [(ngModel)]="datoAdicional.valor" type="text" name="valor">
+                </mat-form-field>
+                
+                <button mat-raised-button color="accent" *ngIf="this.paciente.historiaClinica.datosExtra.length < 3" (click)="agregarDatoExtra()" id="btn-dato-extra">Agregar dato adicional</button>   
+            </div>
+            <button mat-raised-button color="primary" (click)="guardarDatos()" id="btn-guardar">Guardar Datos</button>   
+        </form>
+    </div>
+        
+</div>

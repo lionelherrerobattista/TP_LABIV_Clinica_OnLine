@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Profesional} from 'src/app/clases/profesional';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Turno, estadoTurno } from 'src/app/clases/turno';
+import { Observable } from 'rxjs';
+import { Usuario } from 'src/app/clases/usuario';
 
 @Component({
   selector: 'app-turno-profesional',
@@ -12,6 +14,7 @@ import { Turno, estadoTurno } from 'src/app/clases/turno';
 export class TurnoProfesionalComponent implements OnInit {
 
   
+  @Input() usuarioActual:Observable<Usuario>;
   profesional:Profesional;
   turnosParaConfirmar:Turno[];
   turnosConfirmados:Turno[];
@@ -29,31 +32,28 @@ export class TurnoProfesionalComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.buscarProfesional();
+    this.cargarListas();
   }
 
-  async buscarProfesional() {
-    let usuarioLogeado = await this.authService.getUsuarioLogeado();
+  cargarListas() {
 
-    if(usuarioLogeado != null) {
+    this.usuarioActual.subscribe(usuario => {
 
-      this.usuarioService.getUsuario(usuarioLogeado.uid).subscribe(usuarioActual => {
+      this.profesional = <Profesional>usuario;
 
-        //Castear a profesional
-        this.profesional = <Profesional>usuarioActual[0];
- 
-        if(this.profesional != null && this.profesional.turnos) {
+      if(this.profesional != null && this.profesional.turnos) {
 
-          this.turnosParaConfirmar = this.profesional.turnos.filter(turno =>
-             turno.estado === estadoTurno.aConfirmar.toString()
+        this.turnosParaConfirmar = this.profesional.turnos.filter(turno =>
+            turno.estado === estadoTurno.aConfirmar.toString()
+          );
+          
+          this.turnosConfirmados= this.profesional.turnos.filter(turno =>
+            turno.estado === estadoTurno.aceptado.toString()
             );
-            
-            this.turnosConfirmados= this.profesional.turnos.filter(turno =>
-              turno.estado === estadoTurno.aceptado.toString()
-             );
-        }     
-      });
-    }  
+      }     
+
+    })
+    
   }
 
   aceptarTurno(turno:Turno) {

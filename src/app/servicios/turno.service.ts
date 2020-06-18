@@ -42,7 +42,7 @@ export class TurnoService {
   }
 
   updateTurno(turno:Turno) {
-    this.db.doc('turnos/' + turno.idTurno).update(Turno);
+    this.db.doc('turnos/' + turno.idTurno).update(turno);
   }
 
   deleteTurno(turno:Turno) {

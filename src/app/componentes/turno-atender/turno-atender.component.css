@@ -1,21 +1,8 @@
 
 
-#contenedor {
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
-    height: 92vh;
-    width: 98.9vw;
-    background-image: url(src\assets\img\background_login.jpg);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-
 table {
-    width: 70%;
+    width: 70vw;
+    height: 30vh;
     margin-bottom: 2vh;
 }
 

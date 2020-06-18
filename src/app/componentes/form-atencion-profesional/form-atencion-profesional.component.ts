@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Profesional, HorarioAtencion } from 'src/app/clases/profesional';
+import { Observable } from 'rxjs';
+import { Usuario } from 'src/app/clases/usuario';
 
 
 
@@ -16,6 +18,7 @@ export class FormAtencionProfesionalComponent implements OnInit {
   horario:string;
   displayedColumns: string[] = ['Día', 'Horario', 'Eliminar'];
   diasDeAtencion:HorarioAtencion[];
+  @Input() usuarioActual:Observable<Usuario>;
   profesional:Profesional;
   estaRepetido:boolean;
 
@@ -29,24 +32,19 @@ export class FormAtencionProfesionalComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.buscarProfesional();
+    this.cargarLista();
   }
 
-  async buscarProfesional() {
-    let usuarioLogeado = await this.authService.getUsuarioLogeado();
+  async cargarLista() {
 
-    if(usuarioLogeado != null) {
+    this.usuarioActual.subscribe(usuario => {
 
-      this.usuarioService.getUsuario(usuarioLogeado.uid).subscribe(usuarioActual => {
+      this.profesional = <Profesional>usuario;
 
-        //Castear a profesional
-        this.profesional = <Profesional>usuarioActual[0];
-  
-        if(this.profesional != null && this.profesional.diasAtencion) {
-          this.diasDeAtencion = this.profesional.diasAtencion;
-        }     
-      });
-    } 
+      if(this.profesional != null && this.profesional.diasAtencion) {
+        this.diasDeAtencion = this.profesional.diasAtencion;
+      }     
+    });
   }
 
   ///Guarda el día y horario de atención indicados 

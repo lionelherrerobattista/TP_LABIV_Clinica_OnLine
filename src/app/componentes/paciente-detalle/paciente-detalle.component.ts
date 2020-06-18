@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Paciente } from 'src/app/clases/paciente';
 import { Router } from '@angular/router';
+import { Profesional } from 'src/app/clases/profesional';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-paciente-detalle',
@@ -9,7 +11,8 @@ import { Router } from '@angular/router';
 })
 export class PacienteDetalleComponent implements OnInit {
 
-  @Input() paciente:Paciente;
+  @Input() paciente:Observable<Paciente>;
+  @Input() profesional:Observable<Profesional>;
 
   constructor(
     private router:Router,

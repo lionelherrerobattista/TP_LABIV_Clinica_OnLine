@@ -1,10 +1,14 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Profesional } from 'src/app/clases/profesional';
 import { Turno, estadoTurno } from 'src/app/clases/turno';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Router } from '@angular/router';
 import { Paciente } from 'src/app/clases/paciente';
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { Usuario } from 'src/app/clases/usuario';
+import { TurnoService } from 'src/app/servicios/turno.service';
 
 @Component({
   selector: 'app-turno-atender',
@@ -14,6 +18,7 @@ import { Paciente } from 'src/app/clases/paciente';
 export class TurnoAtenderComponent implements OnInit {
   
   @Output() enviarDetallePaciente = new EventEmitter<Paciente>();
+  @Input() usuarioActual:Observable<Usuario>;
   profesional:Profesional;
   turnosParaAtender:Turno[];
   turnosConfirmados:Turno[];
@@ -21,8 +26,7 @@ export class TurnoAtenderComponent implements OnInit {
 
   constructor(
     private usuarioService:UsuarioService,
-    private authService:AuthService,
-    private router:Router
+    private turnoService:TurnoService,
   ) {
     this.turnosParaAtender= [];
   
@@ -32,29 +36,24 @@ export class TurnoAtenderComponent implements OnInit {
     this.buscarProfesional();
   }
 
-  async buscarProfesional() {
-    let usuarioLogeado = await this.authService.getUsuarioLogeado();
+  buscarProfesional() {
 
-    if(usuarioLogeado != null) {
+    this.usuarioActual.subscribe(usuario => {
 
-      this.usuarioService.getUsuario(usuarioLogeado.uid).subscribe(usuarioActual => {
+      this.profesional = <Profesional>usuario;
 
-        //Castear a profesional
-        this.profesional = <Profesional>usuarioActual[0];
- 
-        if(this.profesional != null && this.profesional.turnos) {
+      if(this.profesional != null && this.profesional.turnos) {
 
-          this.turnosParaAtender = this.profesional.turnos.filter(turno =>
-             turno.estado === estadoTurno.aceptado.toString()
-            );
-        }
-
-      });
-    }  
+        this.turnosParaAtender = this.profesional.turnos.filter(turno =>
+            turno.estado === estadoTurno.aceptado.toString()
+          );
+      }
+    });
   }
 
-  atenderTurno(turno:Turno) {
+  async atenderTurno(turno:Turno) {
     let indice;
+    let paciente = <Paciente> await this.usuarioService.getUsuario(turno.paciente.uid).pipe(first()).toPromise();
 
     this.mostrarDetalle(turno.paciente);
 
@@ -75,7 +74,25 @@ export class TurnoAtenderComponent implements OnInit {
         break;
       }
     }
+
+    //Hacer esto dentro de la clase?
+    for(let turnoGuardado of paciente.turnos) {
+      //guardar turno con id y comparar
+      if(turnoGuardado.idTurno == turno.idTurno) {
+        indice = paciente.turnos.indexOf(turnoGuardado, 0);
+
+        if(indice > -1) {
+          //Sobreescribir el array de firebase:
+          paciente.turnos.splice(indice, 1, turno);
+        }
+
+        break;
+      }
+    }
+
     this.usuarioService.updateUsuario(this.profesional);
+    this.usuarioService.updateUsuario(paciente);
+    this.turnoService.updateTurno(turno);
 
   }
 

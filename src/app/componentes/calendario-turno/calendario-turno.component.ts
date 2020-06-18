@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { map, filter, first } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { Profesional, HorarioAtencion } from 'src/app/clases/profesional';
 import { TurnoService } from 'src/app/servicios/turno.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
-import { Turno } from 'src/app/clases/turno';
+import { Turno, estadoTurno } from 'src/app/clases/turno';
 import { Paciente } from 'src/app/clases/paciente';
 import { DocumentReference } from '@angular/fire/firestore';
-import { Timestamp } from 'rxjs/internal/operators/timestamp';
+
 
 @Component({
   selector: 'app-calendario-turno',
@@ -155,13 +155,19 @@ export class CalendarioTurnoComponent implements OnInit {
     //Buscar los turnos para el mismo día
     let turnosDelDia = listaTurnos.filter(turno => {
       let sonIguales = false;
-      let turnoParseado:Date = turno.diaHora.toDate();
-      turnoParseado = new Date(turnoParseado.toDateString());
-
-      //Comparar turnos del mismo día
-      if(Number(turnoParseado) === Number(this.diaSeleccionado)) {
-        sonIguales = true;
+      let turnoParseado:Date; 
+      
+      //Verificar que no estén cancelados ni rechazados
+      if(turno.estado != estadoTurno.cancelado && turno.estado != estadoTurno.rechazado) {
+        turnoParseado = turno.diaHora.toDate();
+        turnoParseado = new Date(turnoParseado.toDateString());
+        
+        //Comparar turnos del mismo día
+        if(Number(turnoParseado) === Number(this.diaSeleccionado)) {
+          sonIguales = true;
+        }
       }
+      
       return sonIguales;
     });
 
