@@ -24,11 +24,11 @@ export class Turno {
 
         //Saco el array de turnos
         this.profesional= profesional;
-        delete this.profesional.turnos;
+        
 
         //Saco el array de turnos
         this.paciente= paciente; 
-        delete this.paciente.turnos;
+        
     }
 
     

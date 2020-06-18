@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Pregunta, Encuesta, tipoEncuesta } from 'src/app/clases/encuesta';
+import { EncuestaService } from 'src/app/servicios/encuesta.service';
+import { TurnoService } from 'src/app/servicios/turno.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-encuesta-profesional',
@@ -10,14 +14,65 @@ export class EncuestaProfesionalComponent implements OnInit {
   predisposicion;
   puntualidad;
   atenderOtraVez;
+  comentarioProfesional;
+  turnoSeleccionado;
+  idturno;
   
-  constructor() { }
+  constructor(
+    private encuestaService:EncuestaService,
+    private turnoService:TurnoService,
+    private route: ActivatedRoute,
+  ) { 
+
+    this.idturno = this.route.snapshot.paramMap.get('idTurno');
+    this.turnoService.getTurno(this.idturno).subscribe(turno => {
+      this.turnoSeleccionado = turno;
+    })
+  }
 
   ngOnInit(): void {
   }
 
-  guardarEncuesta(){
+  guardarEncuesta() {
+    let preguntas:Pregunta[] = [];
+    let preguntaUno:Pregunta;
+    let preguntaDos:Pregunta;
+    let preguntaTres:Pregunta;
+    let encuesta:Encuesta;
+    let respuestaTres:string;
 
+    if(this.atenderOtraVez) {
+      respuestaTres= "sí";
+    } else {
+      respuestaTres= 'no';
+    }
+
+    preguntaUno = {
+      pregunta: "Predisposición",
+      respuesta: this.predisposicion,
+    }
+
+    preguntaDos = {
+      pregunta: "Puntualidad",
+      respuesta: this.puntualidad,
+    }
+
+    preguntaTres = {
+      pregunta: "¿Volvería a atenderlo?",
+      respuesta: respuestaTres,
+    }
+
+    preguntas.push(preguntaUno);
+    preguntas.push(preguntaDos);
+    preguntas.push(preguntaTres);
+
+    encuesta= new Encuesta(tipoEncuesta.sobrePaciente, this.turnoSeleccionado.paciente,
+       this.turnoSeleccionado.profesional, this.turnoSeleccionado.idTurno, preguntas, this.comentarioProfesional);
+
+    this.encuestaService.createEncuesta(encuesta);
+
+    console.log("Encuesta Guardada!");
+    console.log(encuesta);
   }
 
 }

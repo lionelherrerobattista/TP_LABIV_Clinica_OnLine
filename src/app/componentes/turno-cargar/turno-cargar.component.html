@@ -6,10 +6,10 @@
     <mat-tab label="Turnos"> <app-turno-profesional [usuarioActual]="usuarioActual" *ngIf="usuarioActual != undefined"></app-turno-profesional> </mat-tab>
     <mat-tab label="Atender Paciente"> 
         <div id="contenedor">
-            <app-turno-atender [usuarioActual]="usuarioActual" *ngIf="usuarioActual != undefined" (enviarDetallePaciente)="tomarPacienteParaDetalle($event)"></app-turno-atender>
-            <app-historia-clinica-cargar *ngIf="pacienteParaDetalle != undefined" [pacienteActual]="pacienteParaDetalle" [profesionalActual]="usuarioActual"></app-historia-clinica-cargar>
+            <app-turno-atender [usuarioActual]="usuarioActual" *ngIf="usuarioActual != undefined" (enviarDetallePaciente)="tomarPacienteParaDetalle($event)" (enviarDetalleTurno)="tomarTurnoParaDetalle($event)"></app-turno-atender>
+            <app-historia-clinica-cargar *ngIf="pacienteParaDetalle != undefined" [pacienteActual]="pacienteParaDetalle" [profesionalActual]="usuarioActual" [turnoSeleccionado]="turnoSeleccionado"></app-historia-clinica-cargar>
         </div>
     </mat-tab>
-    <mat-tab label="Encuestas de los Pacientes"> <app-encuesta-profesional></app-encuesta-profesional> </mat-tab>
+    <mat-tab label="Encuestas de los Pacientes"> <app-lista-encuestas  *ngIf="usuarioActual != undefined" [usuarioActual]="usuarioActual"></app-lista-encuestas> </mat-tab>
 </mat-tab-group>
 

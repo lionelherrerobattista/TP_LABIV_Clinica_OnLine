@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Observable } from 'rxjs';
 import { Usuario } from 'src/app/clases/usuario';
+import { Turno } from 'src/app/clases/turno';
 
 @Component({
   selector: 'app-turno-cargar',
@@ -15,6 +16,7 @@ export class TurnoCargarComponent implements OnInit {
 
   pacienteParaDetalle:Observable<Usuario>;
   usuarioActual:Observable<Usuario>;
+  turnoSeleccionado:Turno;
 
   constructor(
     private authService:AuthService,
@@ -38,6 +40,10 @@ export class TurnoCargarComponent implements OnInit {
 
     this.pacienteParaDetalle = this.usuarioService.getUsuario(paciente.uid);
 
+  }
+  tomarTurnoParaDetalle(turno:Turno){
+    console.log(turno);
+    this.turnoSeleccionado = turno;
   }
 
 }

@@ -39,23 +39,31 @@ export class CalendarioTurnoComponent implements OnInit {
   ///Guarda el turno seleccionado por el paciente en las distintas colecciones
   async pedirTurno() {
     let turnoSeleccionado:Turno;
-    let listaTurnos:Turno[];
+    let turno:Turno;
     let referenciaTurno:DocumentReference;
     let usuario = await this.usuarioService.getUsuarioActual();
+    let profesional = <Profesional>await this.usuarioService.getUsuario(this.profesional.uid).pipe(first()).toPromise();
     let paciente = <Paciente> usuario;
 
-    turnoSeleccionado = new Turno(this.turnoSeleccionado, this.profesional, paciente);
+    turnoSeleccionado = new Turno(this.turnoSeleccionado, profesional, paciente);
 
     //Guardar los turnos en la colección de turnos
     referenciaTurno = await this.turnoService.createTurno(turnoSeleccionado);
     
     //Replicar los datos en las demás colecciones
-    listaTurnos = await this.turnoService.getTurno(referenciaTurno.id).pipe(first()).toPromise();
+    turno = await this.turnoService.getTurno(referenciaTurno.id).pipe(first()).toPromise();
 
-    this.profesional.turnos.push(listaTurnos[0]);
-    paciente.turnos.push(listaTurnos[0]);
+    //Volver a tomar los datos con el array de turnos
+    profesional = <Profesional>await this.usuarioService.getUsuario(this.profesional.uid).pipe(first()).toPromise();
+    paciente = <Paciente> await this.usuarioService.getUsuarioActual();
+    console.log(this.profesional);
+    console.log(profesional);
 
-    this.usuarioService.updateUsuario(this.profesional);
+    profesional.turnos.push(turno);
+    // profesional.turnos.push(turno);
+    paciente.turnos.push(turno);
+
+    this.usuarioService.updateUsuario(profesional);
     this.usuarioService.updateUsuario(paciente);
     
   }

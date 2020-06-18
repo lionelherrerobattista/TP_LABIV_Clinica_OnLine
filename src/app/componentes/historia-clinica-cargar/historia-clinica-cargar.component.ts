@@ -5,6 +5,8 @@ import { Profesional } from 'src/app/clases/profesional';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { Router } from '@angular/router';
+import { Turno } from 'src/app/clases/turno';
 
 @Component({
   selector: 'app-historia-clinica-cargar',
@@ -14,6 +16,7 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 export class HistoriaClinicaCargarComponent implements OnInit {
 
   @Input()pacienteActual:Observable<Paciente>;
+  @Input()turnoSeleccionado:Turno;
   paciente:Paciente;
   @Input() profesionalActual:Observable<Profesional>;
   profesional:Profesional;
@@ -28,6 +31,7 @@ export class HistoriaClinicaCargarComponent implements OnInit {
 
   constructor(
     private usuarioService:UsuarioService,
+    private router:Router,
   ) { 
     this.agregarCampos = false;
     this.completarHistoriaClinica = false;
@@ -79,6 +83,10 @@ export class HistoriaClinicaCargarComponent implements OnInit {
   guardarDatos(){
     this.paciente.historiaClinica = Object.assign({}, this.paciente.historiaClinica)
     this.usuarioService.updateUsuario(this.paciente);
+  }
+
+  finalizarAtencion() {
+    this.router.navigate(['encuestas/profesional', this.turnoSeleccionado.idTurno]);
   }
 
 }

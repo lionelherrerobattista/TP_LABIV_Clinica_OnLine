@@ -3,17 +3,17 @@
   
       <ng-container matColumnDef="Día">
         <th mat-header-cell *matHeaderCellDef> Día </th>
-        <td mat-cell *matCellDef="let element"> {{element.dia | titlecase }}  </td>
+        <td mat-cell *matCellDef="let element"> {{element.diaHora.toDate() | date:'dd MMMM yyyy' }}  </td>
       </ng-container>
 
       <ng-container matColumnDef="Hora">
         <th mat-header-cell *matHeaderCellDef> Hora </th>
-        <td mat-cell *matCellDef="let element"> {{element.hora}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.diaHora.toDate() | date:'HH:mm'}}  </td>
       </ng-container>
       
       <ng-container matColumnDef="Paciente">
         <th mat-header-cell *matHeaderCellDef> Paciente </th>
-        <td mat-cell *matCellDef="let element"> {{element.paciente.nombrePaciente | titlecase}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.paciente.apellido | titlecase}}, {{element.paciente.nombre | titlecase}} </td>
       </ng-container>
   
       <ng-container matColumnDef="Estado">

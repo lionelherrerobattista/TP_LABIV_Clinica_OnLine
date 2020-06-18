@@ -18,6 +18,7 @@ import { TurnoService } from 'src/app/servicios/turno.service';
 export class TurnoAtenderComponent implements OnInit {
   
   @Output() enviarDetallePaciente = new EventEmitter<Paciente>();
+  @Output() enviarDetalleTurno = new EventEmitter<Turno>();
   @Input() usuarioActual:Observable<Usuario>;
   profesional:Profesional;
   turnosParaAtender:Turno[];
@@ -47,6 +48,7 @@ export class TurnoAtenderComponent implements OnInit {
         this.turnosParaAtender = this.profesional.turnos.filter(turno =>
             turno.estado === estadoTurno.aceptado.toString()
           );
+        console.log(this.turnosParaAtender);
       }
     });
   }
@@ -56,6 +58,7 @@ export class TurnoAtenderComponent implements OnInit {
     let paciente = <Paciente> await this.usuarioService.getUsuario(turno.paciente.uid).pipe(first()).toPromise();
 
     this.mostrarDetalle(turno.paciente);
+    this.mostrarTurno(turno);
 
     //Modificar el estado:
     turno.estado= estadoTurno.atendido.toString();
@@ -99,6 +102,12 @@ export class TurnoAtenderComponent implements OnInit {
   mostrarDetalle(paciente:Paciente) {
 
     this.enviarDetallePaciente.emit(paciente);
+
+  }
+
+  mostrarTurno(turno:Turno) {
+
+    this.enviarDetalleTurno.emit(turno);
 
   }
 

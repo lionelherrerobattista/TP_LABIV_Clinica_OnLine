@@ -65,7 +65,7 @@ export class TurnoPedirComponent implements OnInit {
   }
 
   pedirTurno(profesional:Profesional) {
-    console.log(profesional)
+    
     this.profesionalSeleccionado = profesional;
   }
 

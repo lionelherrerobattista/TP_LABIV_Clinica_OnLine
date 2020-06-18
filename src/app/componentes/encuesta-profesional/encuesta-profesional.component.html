@@ -1,15 +1,19 @@
+<app-menu></app-menu>
+
 <div id="contenedor">
     
-    <mat-form-field class="example-full-width">
-        <mat-label>Reseña del paciente:</mat-label>
-        <textarea matInput placeholder="Escriba la reseña aquí..." name="comentarioProfesional"></textarea>
-      </mat-form-field>
-
+    
     <form>
-        <mat-label>Encuesta del paciente:</mat-label> 
+        <mat-label>Reseña del paciente:</mat-label>
+        <mat-form-field class="example-full-width">
+            <mat-label>Reseña</mat-label>
+            <textarea matInput [(ngModel)]="comentarioProfesional" placeholder="Escriba la reseña aquí..." name="comentarioProfesional"></textarea>
+        </mat-form-field>
+    
+        <mat-label>Encuesta sobre el paciente:</mat-label> 
     
         <mat-form-field>
-            <mat-label>Predisposición:</mat-label>
+            <mat-label>Predisposición</mat-label>
             <mat-select [(ngModel)]="predisposicion" name="predisposicion">
                 <mat-option value="excelente">Excelente</mat-option>
                 <mat-option value="buena">Buena</mat-option>
@@ -18,7 +22,7 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Puntualidad:</mat-label>
+            <mat-label>Puntualidad</mat-label>
             <mat-select [(ngModel)]="puntualidad" name="puntualidad">
                 <mat-option value="sí">Sí</mat-option>
                 <mat-option value="no">No</mat-option>
@@ -28,6 +32,6 @@
         <mat-label>¿Volvería a atenderlo?</mat-label>
         <mat-checkbox [(ngModel)]="atenderOtraVez" name="predisposicion">Sí</mat-checkbox>
         
-        <button mat-raised-button (click)="guardarEncuesta()">Guardar Encuesta</button>              
+        <button mat-raised-button color="primary" (click)="guardarEncuesta()">Guardar Encuesta</button>              
     </form>   
 </div>

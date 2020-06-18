@@ -71,10 +71,7 @@ export class UsuarioService {
 
   async getUsuarioActual(){
     let usuarioLogeado = await this.authService.getUsuarioLogeado();
-    console.log(usuarioLogeado);
     let usuario = await this.getUsuario(usuarioLogeado.uid).pipe(first()).toPromise();
-
-    console.log(usuario)
 
     return usuario;
   }

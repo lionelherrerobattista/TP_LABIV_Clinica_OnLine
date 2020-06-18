@@ -61,9 +61,12 @@ import { registerLocaleData } from '@angular/common';
 import localeAr from '@angular/common/locales/es-AR';
 import { EncuestaProfesionalComponent } from './componentes/encuesta-profesional/encuesta-profesional.component';
 import { HistoriaClinicaCargarComponent } from './componentes/historia-clinica-cargar/historia-clinica-cargar.component';
+import { ListaEncuestasComponent } from './componentes/lista-encuestas/lista-encuestas.component';
 
 // the second parameter 'fr-FR' is optional
 registerLocaleData(localeAr, 'es-AR');
+
+
 
 @NgModule({
   declarations: [
@@ -91,6 +94,7 @@ registerLocaleData(localeAr, 'es-AR');
     PacienteListaTurnosComponent,
     EncuestaProfesionalComponent,
     HistoriaClinicaCargarComponent,
+    ListaEncuestasComponent,
   ],
   imports: [
     BrowserModule,

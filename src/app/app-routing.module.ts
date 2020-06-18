@@ -12,22 +12,24 @@ import { TurnoPedirComponent } from './componentes/turno-pedir/turno-pedir.compo
 import { TurnoCargarComponent } from './componentes/turno-cargar/turno-cargar.component';
 import { EncuestaPacienteComponent } from './componentes/encuesta-paciente/encuesta-paciente.component';
 import { redirectUnauthorizedTo, canActivate } from '@angular/fire/auth-guard';
+import { EncuestaProfesionalComponent } from './componentes/encuesta-profesional/encuesta-profesional.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
-  {path: '', component: PrincipalComponent},
+  {path: '', component: PrincipalComponent,  data: {animation: 'Two'}},
   {path: 'registro/administrador', component: RegistroAdminComponent, ...canActivate(redirectUnauthorizedToLogin)},
   {path: 'registro/paciente', component: RegistroPacienteComponent, ...canActivate(redirectUnauthorizedToLogin)},
   {path: 'registro/profesional', component: RegistroProfesionalComponent, ...canActivate(redirectUnauthorizedToLogin)},
   {path: 'lista/administrador', component: ListaAdminsComponent, ...canActivate(redirectUnauthorizedToLogin)},
   {path: 'lista/paciente', component: ListaPacientesComponent, ...canActivate(redirectUnauthorizedToLogin)},
   {path: 'lista/profesional', component: ListaProfesionalesComponent, ...canActivate(redirectUnauthorizedToLogin)},
-  {path: 'turno/cargar', component: TurnoCargarComponent, ...canActivate(redirectUnauthorizedToLogin)},
-  {path: 'turno/pedir', component: TurnoPedirComponent, ...canActivate(redirectUnauthorizedToLogin)},
-  {path: 'login', component: LoginComponent},
-  {path: 'principal', component: PrincipalComponent},
-  {path: 'encuesta/paciente', component: EncuestaPacienteComponent},
+  {path: 'turno/cargar', component: TurnoCargarComponent,  ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'turno/pedir', component: TurnoPedirComponent,  ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'login', component: LoginComponent, data: {animation: 'One'}},
+  {path: 'principal', component: PrincipalComponent, data: {animation: 'Two'}},
+  {path: 'encuesta/paciente', component: EncuestaPacienteComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'encuestas/profesional/:idTurno', component: EncuestaProfesionalComponent, ...canActivate(redirectUnauthorizedToLogin) },
 ];
 
 @NgModule({
