@@ -7,6 +7,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Router } from '@angular/router';
 import { Turno } from 'src/app/clases/turno';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-historia-clinica-cargar',
@@ -32,6 +33,7 @@ export class HistoriaClinicaCargarComponent implements OnInit {
   constructor(
     private usuarioService:UsuarioService,
     private router:Router,
+    private snackBar: MatSnackBar,
   ) { 
     this.agregarCampos = false;
     this.completarHistoriaClinica = false;
@@ -83,10 +85,17 @@ export class HistoriaClinicaCargarComponent implements OnInit {
   guardarDatos(){
     this.paciente.historiaClinica = Object.assign({}, this.paciente.historiaClinica)
     this.usuarioService.updateUsuario(this.paciente);
+    this.openSnackBar('Datos Guardados');
   }
 
   finalizarAtencion() {
     this.router.navigate(['encuestas/profesional', this.turnoSeleccionado.idTurno]);
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Confirmar', {
+      duration: 2000,
+    });
   }
 
 }

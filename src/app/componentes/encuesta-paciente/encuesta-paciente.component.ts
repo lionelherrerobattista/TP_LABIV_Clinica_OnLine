@@ -1,13 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Paciente } from 'src/app/clases/paciente';
 import { Profesional } from 'src/app/clases/profesional';
-import { AuthService } from 'src/app/servicios/auth.service';
-import { UsuarioService } from 'src/app/servicios/usuario.service';
-import { TurnoService } from 'src/app/servicios/turno.service';
 import { Pregunta, Encuesta, tipoEncuesta } from 'src/app/clases/encuesta';
 import { Turno, estadoTurno } from 'src/app/clases/turno';
 import { EncuestaService } from 'src/app/servicios/encuesta.service';
 import { first } from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -31,6 +29,7 @@ export class EncuestaPacienteComponent implements OnInit {
 
   constructor(
     private encuestaService:EncuestaService,
+    private snackBar: MatSnackBar,
   ) {
 
     this.listaTurnosAtendidos = [];
@@ -109,8 +108,17 @@ export class EncuestaPacienteComponent implements OnInit {
     console.log(encuesta);
     if(encuesta != undefined) {
       console.log("Encuesta guardada!");
+      this.openSnackBar('¡Encuesta Guardada!');
+      
     }
     
+  }
+
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Confirmar', {
+      duration: 2000,
+    });
   }
 
 }

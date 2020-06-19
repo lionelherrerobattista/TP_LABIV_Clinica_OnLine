@@ -5,6 +5,7 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Turno, estadoTurno } from 'src/app/clases/turno';
 import { TurnoService } from 'src/app/servicios/turno.service';
 import { first } from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-paciente-lista-turnos',
@@ -21,6 +22,7 @@ export class PacienteListaTurnosComponent implements OnInit {
     private authService:AuthService,
     private usuarioService:UsuarioService,
     private turnoService:TurnoService,
+    private snackBar: MatSnackBar
   ) {
 
   }
@@ -78,8 +80,16 @@ export class PacienteListaTurnosComponent implements OnInit {
 
     this.usuarioService.updateUsuario(profesional);
 
+    this.openSnackBar('Turno Cancelado');
+
     console.log("turno cancelado");
 
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Confirmar', {
+      duration: 2000,
+    });
   }
 
 }

@@ -6,6 +6,8 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Turno, estadoTurno } from 'src/app/clases/turno';
 import { Paciente } from 'src/app/clases/paciente';
 import { DocumentReference } from '@angular/fire/firestore';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 
 @Component({
@@ -26,6 +28,7 @@ export class CalendarioTurnoComponent implements OnInit {
   constructor(
     private turnoService:TurnoService,
     private usuarioService:UsuarioService,
+    private snackBar: MatSnackBar
   ) {
     this.mostrar = false;
     this.limiteMin = new Date();
@@ -65,6 +68,8 @@ export class CalendarioTurnoComponent implements OnInit {
 
     this.usuarioService.updateUsuario(profesional);
     this.usuarioService.updateUsuario(paciente);
+
+    this.openSnackBar('¡Turno Guardado!');
     
   }
 
@@ -203,5 +208,11 @@ export class CalendarioTurnoComponent implements OnInit {
         }
       }      
     }
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Confirmar', {
+      duration: 2000,
+    });
   }
 }
