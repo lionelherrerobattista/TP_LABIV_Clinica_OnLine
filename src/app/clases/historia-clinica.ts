@@ -10,10 +10,10 @@ export class HistoriaClinica {
     uidProfesional:string;
     edad:number;
     temperaturaCorporal:number;
-    presion:number;
+    presion:string;
     datosExtra?:datoExtra[];
 
-    constructor(uidPaciente:string, uidProfesional:string, edad:number, temperaturaCorporal:number, presion:number, datosExtra?:datoExtra[]) {
+    constructor(uidPaciente:string, uidProfesional:string, edad:number, temperaturaCorporal:number, presion:string, datosExtra?:datoExtra[]) {
         this.uidPaciente = uidPaciente;
         this.uidProfesional = uidProfesional;
         this.edad = edad;

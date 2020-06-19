@@ -48,7 +48,7 @@ export class TurnoAtenderComponent implements OnInit {
         this.turnosParaAtender = this.profesional.turnos.filter(turno =>
             turno.estado === estadoTurno.aceptado.toString()
           );
-        console.log(this.turnosParaAtender);
+        
       }
     });
   }

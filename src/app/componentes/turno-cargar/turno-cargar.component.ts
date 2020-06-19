@@ -42,7 +42,7 @@ export class TurnoCargarComponent implements OnInit {
 
   }
   tomarTurnoParaDetalle(turno:Turno){
-    console.log(turno);
+    
     this.turnoSeleccionado = turno;
   }
 

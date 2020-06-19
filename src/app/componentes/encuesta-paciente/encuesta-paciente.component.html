@@ -39,12 +39,15 @@
       </table>
     <!-- cargar lista de encuestas pendientes -->
     <div id="div-encuesta" *ngIf="encuestaSeleccionada">
-        <mat-form-field class="example-full-width">
+
+      <mat-label>Comentario del profesional:</mat-label>
+      <p>{{comentarioProfesional}}</p>
+        <form>
+          <mat-form-field class="example-full-width">
             <mat-label>Comentario del paciente:</mat-label>
             <textarea matInput [(ngModel)]="comentarioDelPaciente" name="comentarioPaciente" placeholder="Escriba la reseña aquí..."></textarea>
           </mat-form-field>
-    
-        <form>
+
             <mat-label>Encuesta del paciente:</mat-label> 
         
             <mat-form-field>
@@ -67,7 +70,7 @@
             <mat-label>¿Volvería a solicitar turno?</mat-label>
             <mat-checkbox [(ngModel)]="turnoOtraVez"  name="turnoOtraVez" >Sí</mat-checkbox>
             
-            <button mat-raised-button (click)="guardarEncuesta()">Guardar Encuesta</button>              
+            <button mat-raised-button color="primary" (click)="guardarEncuesta()">Guardar Encuesta</button>              
         </form>   
     </div>
 </div>

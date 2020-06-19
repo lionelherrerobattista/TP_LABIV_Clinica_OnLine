@@ -18,6 +18,10 @@ table {
     flex-direction: column;
     width: 70%;
     height: 50vh;
+    padding: 2vh 2vw 2vh 2vw;
+    border-style: solid;
+    border-radius: 3px;
+
 }
 
 form {

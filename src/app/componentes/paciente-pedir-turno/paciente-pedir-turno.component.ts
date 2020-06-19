@@ -32,8 +32,6 @@ export class PacientePedirTurnoComponent implements OnInit {
   cargarLista() {
     this.usuarioService.devolverListado().subscribe(listaProfesionales => {
 
-      console.log(listaProfesionales)
-
       this.dataSource= new MatTableDataSource(listaProfesionales.filter( usuario => usuario.perfil == 'profesional'));
 
     })
@@ -46,7 +44,7 @@ export class PacientePedirTurnoComponent implements OnInit {
   }
 
   pedirTurno(profesional:Profesional) {
-    console.log(profesional)
+  
     this.profesionalSeleccionado = profesional;
   }
 

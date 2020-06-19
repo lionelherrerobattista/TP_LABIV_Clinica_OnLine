@@ -46,12 +46,12 @@ export class HistoriaClinicaCargarComponent implements OnInit {
     //Para que se actualice el paciente
     this.pacienteActual.subscribe(usuario => {
       this.paciente = <Paciente>usuario;
-      console.log(this.paciente);
+      
     });
 
     this.profesionalActual.subscribe(usuario => {
       this.profesional = <Profesional>usuario;
-      console.log(this.profesional);
+      
     });
 
     this.reactiveForm = new FormGroup({
@@ -65,7 +65,7 @@ export class HistoriaClinicaCargarComponent implements OnInit {
   crearHistoriaClinica(){
     this.agregarCampos = true;
     this.completarHistoriaClinica= true;
-    this.paciente.historiaClinica = new HistoriaClinica(this.paciente.uid, this.profesional.uid, 0, 0, 0);
+    this.paciente.historiaClinica = new HistoriaClinica(this.paciente.uid, this.profesional.uid, 0, 0, '0');
     
 
   }

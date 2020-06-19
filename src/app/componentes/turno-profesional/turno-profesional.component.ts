@@ -46,8 +46,6 @@ export class TurnoProfesionalComponent implements OnInit {
         this.turnosParaConfirmar = this.profesional.turnos.filter(turno =>
             turno.estado === estadoTurno.aConfirmar.toString()
           );
-
-          console.log(this.turnosParaConfirmar);
           
           this.turnosConfirmados= this.profesional.turnos.filter(turno =>
             turno.estado === estadoTurno.aceptado.toString()

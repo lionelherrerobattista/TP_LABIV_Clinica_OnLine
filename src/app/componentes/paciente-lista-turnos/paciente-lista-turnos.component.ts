@@ -33,22 +33,16 @@ export class PacienteListaTurnosComponent implements OnInit {
   async buscarPaciente() {
     let usuarioLogeado = await this.authService.getUsuarioLogeado();
 
-    console.log(usuarioLogeado);
-
     if(usuarioLogeado != null) {
 
       this.usuarioService.getUsuario(usuarioLogeado.uid).subscribe(usuarioActual => {
 
         //Castear a paciente
         this.paciente = <Paciente>usuarioActual;
-
-        console.log(this.paciente);
  
         if(this.paciente != null && this.paciente.turnos) {
 
           this.turnosPaciente = this.paciente.turnos;
-
-          console.log(this.turnosPaciente)
         }
 
       });
@@ -59,8 +53,7 @@ export class PacienteListaTurnosComponent implements OnInit {
     let profesional;
 
     profesional = await this.usuarioService.getUsuario(turno.profesional.uid).pipe(first()).toPromise();
-    console.log(profesional);
-
+    
     //Tomar las 3 entidades(turno, paciente, profesional)
     //cambiar estado a cancelado
 

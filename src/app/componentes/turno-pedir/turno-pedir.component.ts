@@ -24,7 +24,7 @@ export class TurnoPedirComponent implements OnInit {
   constructor(
     private usuarioService:UsuarioService,
     private authService:AuthService,
-    private router:Router,
+  
   ) { }
 
   ngOnInit(): void {
@@ -51,7 +51,7 @@ export class TurnoPedirComponent implements OnInit {
   cargarLista() {
     this.usuarioService.devolverListado().subscribe(listaProfesionales => {
 
-      console.log(listaProfesionales)
+      
 
       this.dataSource= new MatTableDataSource(listaProfesionales.filter( usuario => usuario.perfil == 'profesional'));
 

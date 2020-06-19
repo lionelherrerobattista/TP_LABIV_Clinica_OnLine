@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
-      recaptchaReactive: new FormControl(null, Validators.required),
+      // recaptchaReactive: new FormControl(null, Validators.required),
       emailReactive: new FormControl('', Validators.required),
       passReactive: new FormControl('', Validators.required),
     });
@@ -37,8 +37,6 @@ export class LoginComponent implements OnInit {
   }
 
   iniciarSesion(){
-    console.log(this.email);
-    console.log(this.clave);
 
     this.authService.iniciarSesion(this.email, this.clave).then( respuesta => {
       this.router.navigate(['/principal']);

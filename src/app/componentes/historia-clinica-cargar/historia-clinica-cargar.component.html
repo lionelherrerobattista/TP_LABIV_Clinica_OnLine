@@ -21,8 +21,8 @@
         </mat-card-content>
         <mat-card-actions>
             <button *ngIf="paciente.historiaClinica == undefined" mat-button (click)="crearHistoriaClinica()">Crear Historia Clinica</button>
-            <button mat-button (click)="actualizarHistoriaClinica()">Actualizar Historia Clinica</button>
-            <button mat-button (click)="finalizarAtencion()">Finalizar Atención</button>
+            <button mat-raised-button color="accent" (click)="actualizarHistoriaClinica()">Actualizar Historia Clinica</button>
+            <button mat-raised-button color="primary" (click)="finalizarAtencion()">Finalizar Atención</button>
         </mat-card-actions>
     </mat-card>
 

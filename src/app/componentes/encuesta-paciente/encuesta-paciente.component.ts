@@ -7,6 +7,7 @@ import { TurnoService } from 'src/app/servicios/turno.service';
 import { Pregunta, Encuesta, tipoEncuesta } from 'src/app/clases/encuesta';
 import { Turno, estadoTurno } from 'src/app/clases/turno';
 import { EncuestaService } from 'src/app/servicios/encuesta.service';
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -26,11 +27,9 @@ export class EncuestaPacienteComponent implements OnInit {
   puntualidad:string;
   turnoOtraVez:string;
   profesional:Profesional;
+  comentarioProfesional:string;
 
   constructor(
-    private authService:AuthService,
-    private usuarioService:UsuarioService,
-    private turnoService:TurnoService,
     private encuestaService:EncuestaService,
   ) {
 
@@ -48,14 +47,25 @@ export class EncuestaPacienteComponent implements OnInit {
     if(this.paciente != undefined) {
 
       this.listaTurnosAtendidos = this.paciente.turnos.filter(turno => turno.estado == estadoTurno.atendido);
-
-      console.log(this.listaTurnosAtendidos);
     }
   }
 
-  completarEncuesta(turnoSeleccionado) {
+  completarEncuesta(turnoSeleccionado:Turno) {
     this.encuestaSeleccionada = true;
     this.turnoSeleccionado = turnoSeleccionado;
+    this.cargarComentarioProfesional(turnoSeleccionado.idTurno);
+  }
+
+  async cargarComentarioProfesional(idTurno:string){
+
+    let listaEncuestas = await this.encuestaService.getEncuestas().pipe(first()).toPromise();
+
+    for(let encuesta of listaEncuestas) {
+      if(encuesta.comentario != undefined && encuesta.idTurno == idTurno) {
+        this.comentarioProfesional = encuesta.comentario;
+      }
+    }
+
   }
 
   guardarEncuesta() {
@@ -95,6 +105,12 @@ export class EncuestaPacienteComponent implements OnInit {
        this.turnoSeleccionado.profesional, this.turnoSeleccionado.idTurno, preguntas, this.comentarioDelPaciente);
 
     this.encuestaService.createEncuesta(encuesta);
+
+    console.log(encuesta);
+    if(encuesta != undefined) {
+      console.log("Encuesta guardada!");
+    }
+    
   }
 
 }
