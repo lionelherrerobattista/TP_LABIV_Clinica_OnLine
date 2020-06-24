@@ -24,6 +24,7 @@ export class CalendarioTurnoComponent implements OnInit {
   horasAtencion:Date[];
   mostrar:boolean;
   @Input()profesional:Profesional;
+  especialidad:string;
 
   constructor(
     private turnoService:TurnoService,
@@ -48,7 +49,8 @@ export class CalendarioTurnoComponent implements OnInit {
     let profesional = <Profesional>await this.usuarioService.getUsuario(this.profesional.uid).pipe(first()).toPromise();
     let paciente = <Paciente> usuario;
 
-    turnoSeleccionado = new Turno(this.turnoSeleccionado, profesional, paciente);
+    turnoSeleccionado = new Turno(this.turnoSeleccionado, profesional, this.especialidad, paciente);
+    
 
     //Guardar los turnos en la colección de turnos
     referenciaTurno = await this.turnoService.createTurno(turnoSeleccionado);

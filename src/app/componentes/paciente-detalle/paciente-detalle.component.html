@@ -1,17 +1,24 @@
 
-<!-- <app-historia-clinica-cargar [pacienteActual]="paciente" [profesional]="profesional"></app-historia-clinica-cargar> -->
-
-
-<!-- <mat-card class="paciente-card">
+<mat-card class="paciente-card">
     <mat-card-header>               
-        <mat-card-title>{{paciente.apellido | titlecase}}, {{paciente.nombre | titlecase}}</mat-card-title>
+        <mat-card-title>Paciente: {{paciente.apellido | titlecase}}, {{paciente.nombre | titlecase}}</mat-card-title>
     </mat-card-header>
-    <img mat-card-image [src]="paciente.foto" alt="Foto uno del paciente">
-    <img mat-card-image [src]="paciente.fotoDos" alt="Foto dos del paciente">
+    <div id="div-img">
+        <img mat-card-image [src]="paciente.foto" alt="Foto uno del paciente">
+        <img mat-card-image [src]="paciente.fotoDos" alt="Foto dos del paciente">
+    </div>
     <mat-card-content>
         <p>Dni: {{paciente.dni}}</p>
+        <div *ngIf="paciente.historiaClinica != undefined">
+            <h2>Historia Clínica</h2>
+            <p>Edad: {{paciente.historiaClinica.edad}}</p>
+            <p>Temperatura Corporal: {{paciente.historiaClinica.temperaturaCorporal}}</p>
+            <p>Presión: {{paciente.historiaClinica.presion}}</p>
+
+            <div *ngIf="paciente.historiaClinica.datosExtra" id="#datos-adicionales">
+                <mat-label>Datos adicionales:</mat-label>
+                    <p *ngFor="let dato of paciente.historiaClinica.datosExtra">{{dato.nombreCampo | titlecase}}: {{dato.valor}}</p>
+            </div>
+        </div>        
     </mat-card-content>
-    <mat-card-actions>
-        <button mat-button (click)="iniciarEncuesta()">Finalizar Consulta</button>
-    </mat-card-actions>
-</mat-card> -->
+</mat-card>

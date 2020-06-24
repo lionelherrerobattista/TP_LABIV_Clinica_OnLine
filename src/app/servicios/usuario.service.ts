@@ -87,4 +87,26 @@ export class UsuarioService {
   deleteUsuario(usuario:Usuario) {
     this.db.doc('usuarios/' + usuario.id).delete();
   }
+
+  //Guarda la fecha y hora del ingreso del usuario al sistema
+  async guardarIngreso() {
+    let usuario = await this.getUsuarioActual();
+    let usuarioActual = await this.getUsuario(usuario.uid).pipe(first()).toPromise();
+    let fechaIngreso = new Date();
+
+    usuarioActual.ingresos.push(fechaIngreso);
+    this.updateUsuario(usuarioActual);
+    
+  }
+
+  ///Guarda el numero de operaciones que realiza el usuario
+  async guardarOperacion() {
+
+    let usuario = await this.getUsuarioActual();
+    let usuarioActual = await this.getUsuario(usuario.uid).pipe(first()).toPromise();
+
+    usuarioActual.cantidadOperaciones++;
+    this.updateUsuario(usuarioActual);
+
+  }
 }

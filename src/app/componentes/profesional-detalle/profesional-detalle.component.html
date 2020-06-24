@@ -1,0 +1,13 @@
+<mat-card id="profesional-card">
+    <mat-card-header>               
+        <mat-card-title>Dr./Dra. {{profesional.apellido | titlecase}}, {{profesional.nombre | titlecase}}</mat-card-title>
+    </mat-card-header>
+    <div id="div-img">
+        <img mat-card-image [src]="profesional.foto" alt="Foto del profesional">
+    </div>
+    
+    <mat-card-content>
+        <mat-label>Especialidad:</mat-label>
+        <p *ngFor="let especialidad of profesional.especialidades">{{especialidad}}</p>
+    </mat-card-content>
+</mat-card>

@@ -52,4 +52,56 @@ export class TurnoService {
   deleteTurno(turno:Turno) {
     this.db.doc('turnos/' + turno.idTurno).delete();
   }
+
+  ///Filtra la lista por el string que se le pasa y el tipo de filtro
+  getTurnosFiltrados(filtro, tipoFiltro:string){
+    return this.listaTurnos.pipe(
+      map( turnos => turnos.filter( turno => {
+        
+        let incluirEnLista = false;
+
+        switch(tipoFiltro) {
+          case "nombrePaciente":
+            if(turno.paciente.apellido.indexOf(filtro) > -1)// > -1 si encuentra la string que le paso
+            {
+              incluirEnLista = true;
+            }
+            break;
+
+          case "nombreProfesional":
+            if(turno.profesional.apellido.indexOf(filtro) > -1)
+            {
+              incluirEnLista = true;
+            }
+            break;
+          //historiaClinica puede ser undefined
+          case "temperaturaCorporal":
+            if( turno.paciente.historiaClinica != undefined &&
+              turno.paciente.historiaClinica.temperaturaCorporal.indexOf(filtro) > -1)
+            {
+              incluirEnLista = true;
+            }
+            break;
+          case "especialidad":
+            if( turno.paciente.historiaClinica != undefined &&
+              turno.especialidad.indexOf(filtro) > -1)
+            {
+              incluirEnLista = true;
+            }
+            break;
+          case "dia":
+            console.log(turno.diaHora.toDate().setHours(0,0,0,0));
+            if( turno.diaHora.toDate().setHours(0,0,0,0) == filtro.setHours(0,0,0,0))
+            {
+              incluirEnLista = true;
+            }
+            break;
+            
+        }
+        
+        return incluirEnLista;})
+      )
+    )
+
+  }
 }

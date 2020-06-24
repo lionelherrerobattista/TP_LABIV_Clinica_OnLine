@@ -70,12 +70,15 @@ export class TurnoProfesionalComponent implements OnInit {
         if(indice > -1) {
           //Sobreescribir el array de firebase:
           this.profesional.turnos.splice(indice, 1, turno);
+
         }
 
         break;
       }
     }
     this.usuarioService.updateUsuario(this.profesional);
+    //Sumar una operacion
+    this.usuarioService.guardarOperacion();
   }
 
   ///Borra el horario que recibe como parámetro
@@ -98,5 +101,7 @@ export class TurnoProfesionalComponent implements OnInit {
       }
     }
     this.usuarioService.updateUsuario(this.profesional);
+    //Sumar una operacion
+    this.usuarioService.guardarOperacion();
   }
 }

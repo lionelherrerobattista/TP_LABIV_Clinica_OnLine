@@ -15,10 +15,10 @@
       <input matInput formControlName="passReactive"  [(ngModel)]="clave" type="password" name="clave" required>
     </mat-form-field>
 
-    <!-- <div id="div-captcha">
+    <div id="div-captcha">
       <re-captcha formControlName="recaptchaReactive" (resolved)="resolved($event)" required></re-captcha>
       
-    </div> -->
+    </div>
 
     <button mat-raised-button color="primary" [disabled]="reactiveForm.invalid" (click)="iniciarSesion()">Iniciar Sesión</button>
 

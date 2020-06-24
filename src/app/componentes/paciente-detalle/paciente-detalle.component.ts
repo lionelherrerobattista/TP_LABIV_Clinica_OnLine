@@ -11,8 +11,8 @@ import { Observable } from 'rxjs';
 })
 export class PacienteDetalleComponent implements OnInit {
 
-  @Input() paciente:Observable<Paciente>;
-  @Input() profesional:Observable<Profesional>;
+  @Input() paciente:Paciente;
+ 
 
   constructor(
     private router:Router,
@@ -22,9 +22,5 @@ export class PacienteDetalleComponent implements OnInit {
 
   }
 
-  iniciarEncuesta() {
-    
-    this.router.navigate(['/encuesta/paciente']);
-  }
 
 }

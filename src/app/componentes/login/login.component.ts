@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 
 
@@ -21,12 +22,13 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private usuarioService:UsuarioService,
     private router:Router,
   ) { }
 
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
-      // recaptchaReactive: new FormControl(null, Validators.required),
+      recaptchaReactive: new FormControl(null, Validators.required),
       emailReactive: new FormControl('', Validators.required),
       passReactive: new FormControl('', Validators.required),
     });
@@ -37,8 +39,12 @@ export class LoginComponent implements OnInit {
   }
 
   iniciarSesion(){
+    let usuario;
 
     this.authService.iniciarSesion(this.email, this.clave).then( respuesta => {
+
+     this.usuarioService.guardarIngreso();
+
       this.router.navigate(['/principal']);
     }, error => {
       console.log(error);

@@ -21,8 +21,15 @@
 
         <mat-form-field *ngIf="horasAtencion != undefined">
             <mat-label>Elija la hora</mat-label>
-            <mat-select  [(ngModel)]="turnoSeleccionado" name="turnoSeleccionado" >
+            <mat-select  [(ngModel)]="turnoSeleccionado" name="turnoSeleccionado" required>
                 <mat-option *ngFor="let horaTurno of horasAtencion" [value]="horaTurno">{{horaTurno | date:'HH:mm'}}</mat-option>           
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Seleccione la especialidad</mat-label>
+            <mat-select  [(ngModel)]="especialidad" name="especialidad" required>
+                <mat-option *ngFor="let especialidad of this.profesional.especialidades" [value]="especialidad">{{especialidad | titlecase}}</mat-option>           
             </mat-select>
         </mat-form-field>
             

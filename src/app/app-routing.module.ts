@@ -13,6 +13,8 @@ import { TurnoCargarComponent } from './componentes/turno-cargar/turno-cargar.co
 import { EncuestaPacienteComponent } from './componentes/encuesta-paciente/encuesta-paciente.component';
 import { redirectUnauthorizedTo, canActivate } from '@angular/fire/auth-guard';
 import { EncuestaProfesionalComponent } from './componentes/encuesta-profesional/encuesta-profesional.component';
+import { TurnosBusquedaComponent } from './componentes/turnos-busqueda/turnos-busqueda.component';
+import { InformesComponent } from './componentes/informes/informes.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -30,6 +32,8 @@ const routes: Routes = [
   {path: 'principal', component: PrincipalComponent, data: {animation: 'Two'}},
   {path: 'encuesta/paciente', component: EncuestaPacienteComponent, ...canActivate(redirectUnauthorizedToLogin)},
   {path: 'encuestas/profesional/:idTurno', component: EncuestaProfesionalComponent, ...canActivate(redirectUnauthorizedToLogin) },
+  {path: 'busqueda', component: TurnosBusquedaComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'informes', component: InformesComponent, ...canActivate(redirectUnauthorizedToLogin)},
 ];
 
 @NgModule({

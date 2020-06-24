@@ -63,6 +63,9 @@ import localeAr from '@angular/common/locales/es-AR';
 import { EncuestaProfesionalComponent } from './componentes/encuesta-profesional/encuesta-profesional.component';
 import { HistoriaClinicaCargarComponent } from './componentes/historia-clinica-cargar/historia-clinica-cargar.component';
 import { ListaEncuestasComponent } from './componentes/lista-encuestas/lista-encuestas.component';
+import { TurnosBusquedaComponent } from './componentes/turnos-busqueda/turnos-busqueda.component';
+import { ProfesionalDetalleComponent } from './componentes/profesional-detalle/profesional-detalle.component';
+import { InformesComponent } from './componentes/informes/informes.component';
 
 // the second parameter 'fr-FR' is optional
 registerLocaleData(localeAr, 'es-AR');
@@ -96,6 +99,9 @@ registerLocaleData(localeAr, 'es-AR');
     EncuestaProfesionalComponent,
     HistoriaClinicaCargarComponent,
     ListaEncuestasComponent,
+    TurnosBusquedaComponent,
+    ProfesionalDetalleComponent,
+    InformesComponent,
   ],
   imports: [
     BrowserModule,

@@ -17,10 +17,12 @@ export class Profesional extends Usuario {
   turnos?:Turno[];
   encuestas:Encuesta[];
 
+
   constructor(uid:string, nombre:string, apellido:string, dni:number, email:string, foto:string, especialidades:string[], diasAtencion?:HorarioAtencion[], turnos?:Turno[]) {
 
     super(uid, nombre, apellido, dni, email, foto, 'profesional');
     
+
     this.especialidades = [];
     
     for(let especialidad of especialidades) {

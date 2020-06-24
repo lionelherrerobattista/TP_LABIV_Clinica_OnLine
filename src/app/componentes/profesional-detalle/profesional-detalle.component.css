@@ -7,12 +7,8 @@ mat-card {
 
 img {
     margin-right: 2vw;
-    max-width: 150px;
-    max-height: auto;
-}
-
-h2 {
-    text-align: center;
+     max-width: 150px;
+     max-height: auto;
 }
 
 #div-img {
@@ -20,5 +16,5 @@ h2 {
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: space-around;
+    justify-content:center;
 }

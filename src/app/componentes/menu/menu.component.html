@@ -20,5 +20,7 @@
     <button mat-menu-item *ngIf="perfilUsuario != undefined && perfilUsuario.perfil == 'profesional'" [routerLink]="['/turno/cargar']">Cargar Turno</button>
     <button mat-menu-item *ngIf="perfilUsuario != undefined &&  perfilUsuario.perfil == 'paciente'" [routerLink]="['/turno/pedir']">Pedir Turno</button>
   </mat-menu>
+  <button mat-button [routerLink]="['/busqueda']">Busqueda</button>
+  <button mat-button [routerLink]="['/informes']">Informes</button>
   <button mat-button *ngIf="usuarioLogeado != null" (click)="cerrarSesion()">Cerrar Sesión</button>
 </mat-toolbar>

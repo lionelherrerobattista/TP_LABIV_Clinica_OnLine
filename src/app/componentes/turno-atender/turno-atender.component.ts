@@ -96,6 +96,8 @@ export class TurnoAtenderComponent implements OnInit {
     this.usuarioService.updateUsuario(this.profesional);
     this.usuarioService.updateUsuario(paciente);
     this.turnoService.updateTurno(turno);
+    //Sumar una operacion
+    this.usuarioService.guardarOperacion();
 
   }
 

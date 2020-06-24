@@ -72,6 +72,9 @@ export class FormAtencionProfesionalComponent implements OnInit {
         
         this.profesional.diasAtencion.push(horarioAtencion);
         this.usuarioService.updateUsuario(this.profesional);
+        
+        //Sumar una operacion
+        this.usuarioService.guardarOperacion();
   
         // //orderar array
       } else {
@@ -90,6 +93,7 @@ export class FormAtencionProfesionalComponent implements OnInit {
 
         if(indice > -1) {
           this.profesional.diasAtencion.splice(indice, 1);
+
         }
 
         break;
@@ -97,6 +101,8 @@ export class FormAtencionProfesionalComponent implements OnInit {
     }
 
     this.usuarioService.updateUsuario(this.profesional);
+    //Sumar una operacion
+    this.usuarioService.guardarOperacion();
   }
 
 
