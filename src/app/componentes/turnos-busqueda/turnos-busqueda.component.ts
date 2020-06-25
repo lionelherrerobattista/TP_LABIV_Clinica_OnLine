@@ -59,7 +59,7 @@ export class TurnosBusquedaComponent implements OnInit {
       },
       {
         nombreFiltro: 'datosExtra',
-        nombreParaMostrar: 'Campo dinámico',
+        nombreParaMostrar: 'Datos Adicionales',
       },
       {
         nombreFiltro: 'especialidad',
