@@ -31,3 +31,25 @@ Luego, se completan los datos del usuario que se registra:
 Los usuarios registrados pueden iniciar sesión utilizando su correo electrónico y su clave.
 
 ![Alt text](https://github.com/lionelherrerobattista/TP_LABIV_Clinica_OnLine/blob/con_material/src/assets/img/readme/login1.png?raw=true)
+
+## Pedir Turno
+
+Para pedir turno deberá seleccionar un profesional de la lista.
+
+![Alt text](https://github.com/lionelherrerobattista/TP_LABIV_Clinica_OnLine/blob/master/src/assets/img/readme/pedir_turno1.png?raw=true)
+
+Se desplegarán las opciones para seleccionar día y horario junto con una descripción del profesional seleccionado y su especialidad.
+
+![Alt text](https://github.com/lionelherrerobattista/TP_LABIV_Clinica_OnLine/blob/master/src/assets/img/readme/pedir_turno2.png?raw=true)
+
+## Cancelar Turno
+
+En cualquier momento puede cancelar el turno seleccionado.
+
+![Alt text](https://github.com/lionelherrerobattista/TP_LABIV_Clinica_OnLine/blob/master/src/assets/img/readme/pedir_turno3.png?raw=true)
+
+## Encuesta
+
+Una vez que haya sido atendido por el médico correspondiente podrá completar la encuesta sobre la atención recibida.
+
+![Alt text](https://github.com/lionelherrerobattista/TP_LABIV_Clinica_OnLine/blob/master/src/assets/img/readme/pedir_turno4.png?raw=true)
