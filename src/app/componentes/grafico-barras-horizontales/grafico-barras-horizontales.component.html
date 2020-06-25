@@ -1,0 +1,12 @@
+<div id="div-grafico" *ngIf="barChartData != undefined">
+    <div id="div-canvas" style="display: block">
+      <canvas baseChart
+              [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [options]="barChartOptions"
+              [legend]="barChartLegend"
+              [chartType]="barChartType">
+      </canvas>
+    </div>
+    <button mat-raised-button color="accent" [appExportar]="datosParaArchivo" [nombreArchivo]="'Turnos de los médicos'">Exportar a Archivo</button>
+  </div>

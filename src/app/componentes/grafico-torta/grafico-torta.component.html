@@ -1,0 +1,12 @@
+<div id="div-grafico" style="display: block">
+    <div id="div-canvas">
+        <canvas baseChart
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType">
+        </canvas>
+    </div>
+    <button mat-raised-button color="accent" [appExportar]="datosParaArchivo" [nombreArchivo]="'Operaciones'">Exportar a Archivo</button>
+</div>
+
+ 

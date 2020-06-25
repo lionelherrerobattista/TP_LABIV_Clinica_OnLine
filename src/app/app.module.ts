@@ -57,6 +57,7 @@ import { CalendarioTurnoComponent } from './componentes/calendario-turno/calenda
 import { PacientePedirTurnoComponent } from './componentes/paciente-pedir-turno/paciente-pedir-turno.component';
 import { PacienteListaTurnosComponent } from './componentes/paciente-lista-turnos/paciente-lista-turnos.component';
 
+
 //Import para cambiar el idioma
 import { registerLocaleData } from '@angular/common';
 import localeAr from '@angular/common/locales/es-AR';
@@ -66,6 +67,16 @@ import { ListaEncuestasComponent } from './componentes/lista-encuestas/lista-enc
 import { TurnosBusquedaComponent } from './componentes/turnos-busqueda/turnos-busqueda.component';
 import { ProfesionalDetalleComponent } from './componentes/profesional-detalle/profesional-detalle.component';
 import { InformesComponent } from './componentes/informes/informes.component';
+import { ExportarDirective } from './directivas/exportar.directive';
+
+//Charts
+import { ChartsModule } from 'ng2-charts';
+import { GraficoBarrasComponent } from './componentes/grafico-barras/grafico-barras.component';
+import { GraficoTortaComponent } from './componentes/grafico-torta/grafico-torta.component';
+import { GraficoLineasComponent } from './componentes/grafico-lineas/grafico-lineas.component';
+import { GraficoBarrasHorizontalesComponent } from './componentes/grafico-barras-horizontales/grafico-barras-horizontales.component';
+import { ParsearFechaPipe } from './pipes/parsear-fecha.pipe';
+
 
 // the second parameter 'fr-FR' is optional
 registerLocaleData(localeAr, 'es-AR');
@@ -102,6 +113,12 @@ registerLocaleData(localeAr, 'es-AR');
     TurnosBusquedaComponent,
     ProfesionalDetalleComponent,
     InformesComponent,
+    ExportarDirective,
+    GraficoBarrasComponent,
+    GraficoTortaComponent,
+    GraficoLineasComponent,
+    GraficoBarrasHorizontalesComponent,
+    ParsearFechaPipe,
   ],
   imports: [
     BrowserModule,
@@ -130,7 +147,8 @@ registerLocaleData(localeAr, 'es-AR');
     MatPaginatorModule,
     MatCardModule,
     MatFormFieldModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ChartsModule
   ],
   providers: [{
     provide: RECAPTCHA_SETTINGS,
