@@ -50,12 +50,26 @@ export class TurnosBusquedaComponent implements OnInit {
         nombreParaMostrar: 'Temperatura Corporal',
       },
       {
+        nombreFiltro: 'edad',
+        nombreParaMostrar: 'Edad',
+      },
+      {
+        nombreFiltro: 'presion',
+        nombreParaMostrar: 'Presión',
+      },
+      {
+        nombreFiltro: 'datosExtra',
+        nombreParaMostrar: 'Campo dinámico',
+      },
+      {
         nombreFiltro: 'especialidad',
         nombreParaMostrar: 'Especialidad',
       },
       
     ];
     this.turnoService.getTurnos().subscribe(turnos => {
+      console.log(turnos)
+      turnos.sort( this.ordernar);
       this.listaTurnos = turnos;
     });
   }
@@ -68,16 +82,25 @@ export class TurnosBusquedaComponent implements OnInit {
     if(this.tipoFiltro == "todos" && this.filtro == "") {
       this.turnoService.getTurnos().subscribe(lista => {
         console.log(lista);
+        lista.sort( this.ordernar);
         this.listaTurnos = lista;
       });
      
     } else {
       this.turnoService.getTurnosFiltrados(this.filtro, this.tipoFiltro).subscribe( lista => {
         console.log(lista);
+        lista.sort( this.ordernar);
+
         this.listaTurnos = lista;
+        
       });
      
     }
+  }
+
+  ordernar(a:Turno,b:Turno) {
+    console.log(a)
+    return a.diaHora.seconds - b.diaHora.seconds
   }
 
   filtrarDia() {

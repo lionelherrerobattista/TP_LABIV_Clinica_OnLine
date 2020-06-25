@@ -82,12 +82,37 @@ export class TurnoService {
               incluirEnLista = true;
             }
             break;
+          case "edad":
+            if( turno.paciente.historiaClinica != undefined &&
+              turno.paciente.historiaClinica.edad.indexOf(filtro) > -1)
+            {
+              incluirEnLista = true;
+            }
+            break;
+          case "presion":
+            if( turno.paciente.historiaClinica != undefined &&
+              turno.paciente.historiaClinica.presion.indexOf(filtro) > -1)
+            {
+              incluirEnLista = true;
+            }
+            break;
           case "especialidad":
             if( turno.paciente.historiaClinica != undefined &&
               turno.especialidad.indexOf(filtro) > -1)
             {
               incluirEnLista = true;
             }
+            break;
+          case "datosExtra":
+            if( turno.paciente.historiaClinica != undefined) {
+
+              for(let dato of turno.paciente.historiaClinica.datosExtra)
+              {
+                if(dato.valor == filtro) {
+                  incluirEnLista = true;
+                }
+              }
+            } 
             break;
           case "dia":
             console.log(turno.diaHora.toDate().setHours(0,0,0,0));
